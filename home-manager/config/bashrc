@@ -1,0 +1,265 @@
+# Custom bashrc configuration for dotfiles
+# This file is managed by home-manager and can be committed to git
+
+# ===== CUSTOM ALIASES =====
+# Modern CLI tool replacements
+alias ls='eza --color=auto'
+alias ll='eza -alF --color=auto'
+alias la='eza -A --color=auto'
+alias l='eza -CF --color=auto'
+alias tree='eza --tree'
+
+alias cat='bat'
+alias grep='rg'
+alias find='fd'
+
+# Keep original commands available with g prefix
+alias gls='/usr/bin/ls'
+alias gcat='/usr/bin/cat'
+alias ggrep='/usr/bin/grep'
+alias gfind='/usr/bin/find'
+
+# Traditional grep with color
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Dotfiles management
+alias dotfiles='cd $DOTFILES_DIR'
+alias rebuild-home='cd $DOTFILES_DIR && ./rebuild.sh home'
+alias rebuild-system='cd $DOTFILES_DIR && ./rebuild.sh system'
+alias rebuild-all='cd $DOTFILES_DIR && ./rebuild.sh'
+
+# Git aliases
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias gp='git push'
+alias gl='git log --oneline'
+alias gd='git diff'
+
+# dev
+alias px="pixi"
+alias pxr="pixi run"
+alias pxs="pixi shell"
+alias pxa="pixi add"
+alias pxg="pixi global"
+
+# Clipboard aliases
+alias pbcopy='wl-copy'
+alias pbpaste='wl-paste'
+alias clipboard='cliphist list | wofi --dmenu | cliphist decode | wl-copy'
+alias clipclear='cliphist wipe'
+
+# System info
+alias h='history'
+alias hg='history | grep'
+alias free='free -h'
+alias df='df -h'
+alias du='du -h'
+
+# Server logins
+alias nelli='ssh fschulz@nelli'
+alias jgi-ont='ssh fschulz@100.84.9.12'
+alias saul="ssh fschulz@saul-p1.nersc.gov"
+alias dori="ssh fschulz@jgi-interactive08.jgi.lbl.gov"
+
+# ===== CUSTOM FUNCTIONS =====
+# Quick edit dotfiles
+edit-dotfiles() {
+    cd $DOTFILES_DIR
+    code .
+}
+
+# Quick search in dotfiles
+search-dotfiles() {
+    if [ -z "$1" ]; then
+        echo "Usage: search-dotfiles <search-term>"
+        return 1
+    fi
+    cd $DOTFILES_DIR
+    rg "$1" --type nix --type md --type sh
+}
+
+# FZF-powered functions
+if command -v fzf >/dev/null 2>&1; then
+  # Interactive file search and edit
+  fe() {
+    local files
+    files=$(fzf --query="$1" --multi --select-1 --exit-0) &&
+    ${EDITOR:-vim} "${files[@]}"
+  }
+  
+  # Interactive directory navigation
+  fcd() {
+    local dir
+    dir=$(find ${1:-.} -path '*/\.*' -prune -o -type d -print 2> /dev/null | fzf +m) &&
+    cd "$dir"
+  }
+  
+  # Interactive process kill
+  fkill() {
+    local pid
+    pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+    if [ "x$pid" != "x" ]; then
+      echo $pid | xargs kill -${1:-9}
+    fi
+  }
+  
+  # Search and install nix package
+  nix-search() {
+    nix search nixpkgs "$1" | fzf --preview 'echo {}' --height=80%
+  }
+fi
+
+# WiFi management functions
+wifiscan() {
+  echo "Scanning for available WiFi networks..."
+  nmcli device wifi list
+}
+
+wificonnect() {
+  if [ -z "$1" ]; then
+    echo "Usage: wificonnect <wifi-name>"
+    echo "Example: wificonnect \"MyWiFiNetwork\""
+    return 1
+  fi
+  
+  echo "Connecting to WiFi network: $1"
+  nmcli device wifi connect "$1"
+}
+
+# ===== ENVIRONMENT SETUP =====
+# Set dotfiles directory
+export DOTFILES_DIR="/home/fschulz/dotfiles"
+
+# Load .env file if it exists (for sensitive/local variables)
+if [ -f "$DOTFILES_DIR/secrets/.env" ]; then
+    source "$DOTFILES_DIR/secrets/.env"
+fi
+
+# ===== SHELL OPTIONS =====
+# Commands that should be applied only for interactive shells.
+# [[ $- == *i* ]] || return  # Commented out - home-manager handles this
+
+# ===== PROMPT CUSTOMIZATION =====
+# This will be overridden by starship if it's active
+export PS1='\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ '
+
+# ===== DEVELOPMENT TOOLS =====
+# Node.js
+export NODE_OPTIONS="--max-old-space-size=4096"
+
+# Python
+export PYTHONDONTWRITEBYTECODE=1
+
+# ===== SYSTEM INTEGRATIONS =====
+# Bash completion
+if [[ ! -v BASH_COMPLETION_VERSINFO ]]; then
+  if [ -f /etc/bash_completion ]; then
+    source /etc/bash_completion
+  elif [ -f /usr/share/bash-completion/bash_completion ]; then
+    source /usr/share/bash-completion/bash_completion
+  fi
+fi
+
+# Claude code
+ccv () {
+  local env_vars=(
+    "ENABLE_BACKGROUND_TASKS=true"
+    "FORCE_AUTO_BACKGROUND_TASKS=true"
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=true"
+    "CLAUDE_CODE_ENABLE_UNIFIED_READ_TOOL=true"
+  )
+
+  local claude_args=()
+
+  if [[ $1 == -y ]]; then
+    claude_args+=(--dangerously-skip-permissions)
+
+  elif [[ $1 == -r ]]; then
+    claude_args+=(--resume)
+
+  elif [[ $1 == -ry || $1 == -yr ]]; then
+    claude_args+=(--resume --dangerously-skip-permissions)
+  fi
+
+  env "${env_vars[@]}" claude "${claude_args[@]}"
+}
+
+
+# Zoxide (smart cd)
+eval "$(zoxide init bash)"
+
+# Yazi function for cd on exit
+function yy() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXX")"
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+    builtin cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
+}
+
+# Kitty integration
+if test -n "$KITTY_INSTALLATION_DIR"; then
+  export KITTY_SHELL_INTEGRATION="no-rc"
+  source "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"
+fi
+
+# FZF integration for bash
+if command -v fzf >/dev/null 2>&1; then
+  # Source fzf bash integration
+  source <(fzf --bash)
+  
+  # Custom fzf options with neo-brutalist colors
+  export FZF_DEFAULT_OPTS="
+    --color=bg+:#FFBE0B,bg:#FFFFFF,spinner:#FF006E,hl:#FF006E
+    --color=fg:#000000,header:#06FFA5,info:#06FFA5,pointer:#FF006E
+    --color=marker:#FF006E,fg+:#000000,prompt:#FF006E,hl+:#FF006E
+    --height=50% --layout=reverse --border --margin=1 --padding=1
+  "
+  
+  # Use fd for fzf if available
+  if command -v fd >/dev/null 2>&1; then
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+  fi
+  
+  # Enhanced history search with fzf
+  __fzf_history__() {
+    local output
+    output=$(
+      builtin fc -lnr -2147483648 |
+      last_hist=$(HISTTIMEFORMAT='' builtin history 1) &&
+      command grep -v "^${last_hist:* }" |
+      FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --tac -n2..,.. --tiebreak=index --bind=ctrl-r:toggle-sort $FZF_CTRL_R_OPTS" fzf --query "$READLINE_LINE"
+    ) || return
+    READLINE_LINE=${output#*$'\t'}
+    if [ -z "$READLINE_POINT" ]; then
+      echo "$READLINE_LINE"
+    else
+      READLINE_POINT=0x7fffffff
+    fi
+  }
+  
+  # Bind Ctrl+R to fzf history search
+  bind -m emacs-standard -x '"\C-r": __fzf_history__'
+  bind -m vi-command -x '"\C-r": __fzf_history__'
+  bind -m vi-insert -x '"\C-r": __fzf_history__'
+fi
+
+# Starship prompt (neo-brutalist theme)
+if [[ $TERM != "dumb" ]] && command -v starship >/dev/null 2>&1; then
+  eval "$(starship init bash)"
+fi
+
+# GPG
+GPG_TTY="$(tty)"
+export GPG_TTY
+command -v gpg-connect-agent >/dev/null && gpg-connect-agent --quiet updatestartuptty /bye > /dev/null 2>&1
+
+# Run welcome script in interactive shells
+if [[ $- == *i* ]] && [ -f ~/.config/scripts/welcome.sh ]; then
+  ~/.config/scripts/welcome.sh
+fi

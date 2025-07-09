@@ -1,0 +1,39 @@
+# Backup directories created by install script
+.config-backup-*
+
+# System-specific files
+*.log
+*.tmp
+*~
+
+# Editor files
+.vscode/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Nix specific
+result
+result-*
+
+# Personal/sensitive data
+*.key
+*.pem
+*.p12
+secrets/.env
+secrets/.env.local
+.env
+.env.local
+
+# Cache directories
+.cache/
+__pycache__/
+*.pyc

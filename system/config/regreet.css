@@ -1,0 +1,144 @@
+/* Neo-brutalist login screen styling for regreet */
+
+/* Main window background */
+window {
+    background-color: #FFBE0B;
+    font-family: "JetBrains Mono";
+    font-weight: bold;
+}
+
+/* Login container */
+.login-container {
+    background-color: #FFBE0B;
+    border: 5px solid #000000;
+    border-radius: 0;
+    padding: 40px;
+    margin: 20px;
+    box-shadow: 8px 8px 0px #000000;
+}
+
+/* Login form fields */
+entry {
+    background-color: #FFFFFF;
+    color: #000000;
+    border: 4px solid #000000;
+    border-radius: 0;
+    padding: 15px;
+    margin: 10px 0;
+    font-family: "JetBrains Mono";
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 4px 4px 0px #000000;
+}
+
+entry:focus {
+    border-color: #FF006E;
+    background-color: #FFFFFF;
+    box-shadow: 4px 4px 0px #FF006E;
+}
+
+/* Buttons */
+button {
+    background-color: #FF006E;
+    color: #FFFFFF;
+    border: 4px solid #000000;
+    border-radius: 0;
+    padding: 15px 30px;
+    margin: 10px;
+    font-family: "JetBrains Mono";
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 6px 6px 0px #000000;
+    min-width: 120px;
+}
+
+button:hover {
+    background-color: #FFBE0B;
+    color: #000000;
+    box-shadow: 6px 6px 0px #FF006E;
+    border-color: #FF006E;
+}
+
+button:active {
+    box-shadow: 2px 2px 0px #000000;
+    transform: translate(2px, 2px);
+}
+
+/* Session selector */
+combobox button {
+    background-color: #3185FC;
+    color: #FFFFFF;
+    border: 4px solid #000000;
+    box-shadow: 4px 4px 0px #000000;
+}
+
+combobox button:hover {
+    background-color: #06FFA5;
+    color: #000000;
+    border-color: #000000;
+}
+
+/* Labels */
+label {
+    color: #000000;
+    font-family: "JetBrains Mono";
+    font-weight: bold;
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+/* Greeting message */
+.greeting {
+    color: #000000;
+    font-family: "JetBrains Mono";
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+    margin: 20px 0;
+    text-shadow: 2px 2px 0px #FFFFFF;
+}
+
+/* Error messages */
+.error {
+    background-color: #FF006E;
+    color: #FFFFFF;
+    border: 3px solid #000000;
+    border-radius: 0;
+    padding: 10px;
+    margin: 10px 0;
+    font-family: "JetBrains Mono";
+    font-weight: bold;
+    box-shadow: 4px 4px 0px #000000;
+}
+
+/* Username/password field containers */
+.form-group {
+    margin: 15px 0;
+}
+
+/* Power button styles */
+.power-button {
+    background-color: #B14AFF;
+    color: #FFFFFF;
+    border: 4px solid #000000;
+    border-radius: 0;
+    padding: 12px;
+    margin: 5px;
+    font-family: "JetBrains Mono";
+    font-weight: bold;
+    box-shadow: 4px 4px 0px #000000;
+}
+
+.power-button:hover {
+    background-color: #FF006E;
+    box-shadow: 4px 4px 0px #B14AFF;
+}
+
+/* Accessibility high contrast mode */
+@media (prefers-contrast: high) {
+    * {
+        border-width: 6px;
+        box-shadow-offset-x: 10px;
+        box-shadow-offset-y: 10px;
+    }
+}
