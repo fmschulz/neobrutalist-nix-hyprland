@@ -29,6 +29,10 @@ alias rebuild-home='cd $DOTFILES_DIR && ./rebuild.sh home'
 alias rebuild-system='cd $DOTFILES_DIR && ./rebuild.sh system'
 alias rebuild-all='cd $DOTFILES_DIR && ./rebuild.sh'
 
+# Monitor management
+alias monitor-connect='$DOTFILES_DIR/scripts/monitor-connect.sh'
+alias clear-notifications='$DOTFILES_DIR/scripts/clear-notifications.sh'
+
 # Git aliases
 alias gs='git status'
 alias ga='git add'

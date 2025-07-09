@@ -230,6 +230,10 @@
         ", Print, exec, grim -g \"$(slurp)\" - | wl-copy"
         "$mainMod, Print, exec, grim - | wl-copy"
         "$mainMod SHIFT, Print, exec, grim -g \"$(slurp)\" ~/Pictures/screenshot_$(date +%Y%m%d_%H%M%S).png"
+        
+        # Monitor management
+        "$mainMod CTRL, M, exec, ~/dotfiles/scripts/monitor-connect.sh"
+        "$mainMod CTRL, N, exec, ~/dotfiles/scripts/clear-notifications.sh"
       ];
       
       # Mouse bindings
