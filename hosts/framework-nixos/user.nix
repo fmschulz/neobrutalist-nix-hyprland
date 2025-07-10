@@ -4,8 +4,8 @@
 {
   # Primary user settings
   username = "fschulz";
-  fullName = "Framework User";
-  email = "your-email@example.com";  # Update this
+  fullName = "fmschulz";
+  email = "fmschulz@users.noreply.github.com";
   
   # SSH server aliases (optional - can be empty)
   sshAliases = {
