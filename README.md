@@ -15,6 +15,7 @@ A comprehensive, portable, and production-ready dotfiles repository for NixOS wi
 - **🚀 One-Command Deployment**: Automated bootstrap and update scripts
 - **💾 Hardware Profiles**: Framework 13 AMD optimized with portability in mind
 - **🔄 Reproducible Builds**: Flake-based with pinned dependencies
+- **👥 Portable Configuration**: No hardcoded usernames - easily adoptable by others
 
 ## 📁 Repository Structure
 
@@ -182,9 +183,9 @@ The entire desktop follows a consistent neo-brutalist aesthetic:
 The dotfiles are designed to be portable and easily adopted by other users:
 
 1. **Initial Setup**: Run `./scripts/setup-user.sh` to configure:
-   - Your username
+   - Your username (replaces hardcoded usernames throughout configs)
    - Full name and email (for git)
-   - SSH server aliases
+   - SSH server aliases with terminal compatibility
 
 2. **User Settings**: Edit `hosts/framework-nixos/user.nix` to modify:
    ```nix
@@ -199,9 +200,17 @@ The dotfiles are designed to be portable and easily adopted by other users:
    }
    ```
 
-3. **Personal Files**: Keep personal settings in:
+3. **What's Portable**:
+   - No hardcoded usernames - uses dynamic `${userConfig.username}`
+   - Paths use `$HOME` instead of `/home/username`
+   - SSH aliases automatically configured with proper TERM settings
+   - Git configuration pulls from user settings
+   - Home directory paths calculated dynamically
+
+4. **Personal Files**: Keep personal settings in:
    - `home-manager/.env` - Environment variables (gitignored)
    - `secrets/` - Sensitive configurations (gitignored)
+   - `hosts/*/user.nix` - User-specific configuration
 
 ### Adding a New Host
 1. Create `hosts/hostname/` directory
