@@ -142,6 +142,14 @@
 
   programs.dconf.enable = true;
 
+  # Gaming - Steam
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    gamescopeSession.enable = true; # GameScope session for better gaming experience
+  };
+
   # Docker support
   virtualisation.docker = {
     enable = true;

@@ -122,6 +122,13 @@
     # Container/Virtualization tools (user-level)
     apptainer
     docker-client       # Docker CLI tools
+    
+    # Gaming
+    lutris              # Game launcher for non-Steam games
+    heroic              # Epic Games and GOG launcher
+    gamemode            # Gaming optimizations
+    mangohud            # Gaming overlay for FPS/performance monitoring
+    gamescope           # Gaming compositor
   ];
   
   # Programs that need additional configuration
