@@ -1,6 +1,6 @@
-# 🚀 State-of-the-Art NixOS Dotfiles
+# 🚀 Neobrutalist NixOS
 
-A comprehensive, portable, and production-ready dotfiles repository for NixOS with Home Manager, featuring a neo-brutalist aesthetic and Berkeley-focused configurations.
+A comprehensive, portable, and production-ready dotfiles repository for NixOS with Home Manager, featuring a neo-brutalist aesthetic.
 
 [![NixOS](https://img.shields.io/badge/NixOS-25.05-blue.svg?style=flat&logo=nixos)](https://nixos.org)
 [![Home Manager](https://img.shields.io/badge/Home%20Manager-latest-green.svg?style=flat)](https://github.com/nix-community/home-manager)
