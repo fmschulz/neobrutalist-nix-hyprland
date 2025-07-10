@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Quick rebuild script - inspired by popular GitHub dotfiles repos
+# Quick rebuild script
 # Usage: ./rebuild.sh [system|home|all]
 
 set -e

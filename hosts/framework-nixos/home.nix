@@ -3,10 +3,14 @@
 
 { config, pkgs, lib, inputs, unstable, ... }:
 
+let
+  # Import user-specific settings
+  userConfig = import ./user.nix;
+in
 {
   # Home Manager needs a bit of information about you and the paths it should manage
-  home.username = "fschulz";
-  home.homeDirectory = "/home/fschulz";
+  home.username = userConfig.username;
+  home.homeDirectory = "/home/${userConfig.username}";
   home.stateVersion = "24.11";
   
   # Host identification for home-manager
@@ -41,12 +45,13 @@
     ../../home-manager/modules/hypridle.nix
     ../../home-manager/modules/hyprlock.nix
     ../../home-manager/modules/starship.nix
+    ../../home-manager/modules/ssh-aliases.nix
   ];
   
   # Host-specific git configuration
   programs.git = {
-    userName = "Your Name";  # TODO: Move to secrets
-    userEmail = "your.email@example.com";  # TODO: Move to secrets
+    userName = userConfig.fullName;
+    userEmail = userConfig.email;
     extraConfig = {
       init.defaultBranch = "main";
       core.editor = "code --wait";
@@ -62,7 +67,7 @@
   programs.bash.shellAliases = {
     # Host-specific aliases
     rebuild = "sudo nixos-rebuild switch --flake ~/dotfiles#framework-nixos";
-    rebuild-home = "home-manager switch --flake ~/dotfiles#fschulz@framework-nixos";
+    rebuild-home = "home-manager switch --flake ~/dotfiles#${userConfig.username}@framework-nixos";
     update-flake = "cd ~/dotfiles && nix flake update";
     
     # Berkeley weather shortcut

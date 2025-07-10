@@ -67,12 +67,14 @@ dotfiles/
 
 ### New Installation
 ```bash
-# Download and run bootstrap script
-curl -L https://raw.githubusercontent.com/yourusername/dotfiles/main/scripts/bootstrap.sh | bash
-
-# Or clone and run manually
-git clone https://github.com/yourusername/dotfiles.git ~/dotfiles
+# Clone the repository
+git clone https://github.com/fmschulz/dotfiles.git ~/dotfiles
 cd ~/dotfiles
+
+# Configure your username and settings
+./scripts/setup-user.sh
+
+# Run bootstrap script
 ./scripts/bootstrap.sh
 ```
 
@@ -175,6 +177,31 @@ The entire desktop follows a consistent neo-brutalist aesthetic:
 - **Theming**: Consistent styling across all applications
 
 ## 🔧 Customization
+
+### User Configuration (Portable Setup)
+The dotfiles are designed to be portable and easily adopted by other users:
+
+1. **Initial Setup**: Run `./scripts/setup-user.sh` to configure:
+   - Your username
+   - Full name and email (for git)
+   - SSH server aliases
+
+2. **User Settings**: Edit `hosts/framework-nixos/user.nix` to modify:
+   ```nix
+   {
+     username = "yourusername";
+     fullName = "Your Name";
+     email = "your.email@example.com";
+     
+     sshAliases = {
+       myserver = "user@myserver.com";
+     };
+   }
+   ```
+
+3. **Personal Files**: Keep personal settings in:
+   - `home-manager/.env` - Environment variables (gitignored)
+   - `secrets/` - Sensitive configurations (gitignored)
 
 ### Adding a New Host
 1. Create `hosts/hostname/` directory

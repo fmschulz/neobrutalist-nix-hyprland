@@ -26,7 +26,7 @@
   home.file.".config/qt5ct/qt5ct.conf".text = ''
     [Appearance]
     custom_palette=true
-    color_scheme_path=/home/fschulz/.config/qt5ct/colors/neobrutalist.conf
+    color_scheme_path=$HOME/.config/qt5ct/colors/neobrutalist.conf
     icon_theme=Adwaita
     standard_dialogs=gtk3
     style=Fusion
@@ -45,7 +45,7 @@
     keyboard_scheme=2
     menus_have_icons=true
     show_shortcuts_in_context_menus=true
-    stylesheets=/home/fschulz/.config/qt5ct/qss/neobrutalist.qss
+    stylesheets=$HOME/.config/qt5ct/qss/neobrutalist.qss
     toolbutton_style=4
     underline_shortcut=1
     wheel_scroll_lines=3
@@ -251,7 +251,7 @@
   home.file.".config/qt6ct/qt6ct.conf".text = ''
     [Appearance]
     custom_palette=true
-    color_scheme_path=/home/fschulz/.config/qt6ct/colors/neobrutalist.conf
+    color_scheme_path=$HOME/.config/qt6ct/colors/neobrutalist.conf
     icon_theme=Adwaita
     standard_dialogs=default
     style=Fusion
@@ -270,7 +270,7 @@
     keyboard_scheme=2
     menus_have_icons=true
     show_shortcuts_in_context_menus=true
-    stylesheets=/home/fschulz/.config/qt6ct/qss/neobrutalist.qss
+    stylesheets=$HOME/.config/qt6ct/qss/neobrutalist.qss
     toolbutton_style=4
     underline_shortcut=1
     wheel_scroll_lines=3

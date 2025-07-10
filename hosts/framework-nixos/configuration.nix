@@ -3,6 +3,10 @@
 
 { config, lib, pkgs, inputs, ... }:
 
+let
+  # Import user-specific settings
+  userConfig = import ./user.nix;
+in
 {
   imports = [
     # Hardware configuration
@@ -52,9 +56,9 @@
   };
   
   # User configuration
-  users.users.fschulz = {
+  users.users.${userConfig.username} = {
     isNormalUser = true;
-    description = "Framework User";
+    description = userConfig.fullName;
     extraGroups = [ 
       "wheel" 
       "networkmanager" 

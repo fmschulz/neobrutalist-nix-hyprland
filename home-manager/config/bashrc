@@ -62,10 +62,8 @@ alias df='df -h'
 alias du='du -h'
 
 # Server logins with terminal compatibility
-alias nelli='TERM=xterm-256color ssh fschulz@nelli'
-alias jgi-ont='TERM=xterm-256color ssh fschulz@100.84.9.12'
-alias saul="TERM=xterm-256color ssh fschulz@saul-p1.nersc.gov"
-alias dori="TERM=xterm-256color ssh fschulz@jgi-interactive08.jgi.lbl.gov"
+# Note: Define your SSH aliases in hosts/*/user.nix
+# They will be automatically loaded if available
 
 # SSH wrapper function for better terminal compatibility
 ssh() {
@@ -151,7 +149,7 @@ wificonnect() {
 
 # ===== ENVIRONMENT SETUP =====
 # Set dotfiles directory
-export DOTFILES_DIR="/home/fschulz/dotfiles"
+export DOTFILES_DIR="$HOME/dotfiles"
 
 # Load .env file if it exists (for sensitive/local variables)
 if [ -f "$DOTFILES_DIR/secrets/.env" ]; then
