@@ -18,16 +18,8 @@
     # Additional packages not in modules/packages.nix
   ];
 
-  # Git configuration
-  programs.git = {
-    enable = true;
-    userName = "Your Name";  # Update this
-    userEmail = "your.email@example.com";  # Update this
-    extraConfig = {
-      init.defaultBranch = "main";
-      core.editor = "nano";  # or your preferred editor
-    };
-  };
+  # Git configuration - moved to host-specific config
+  # See hosts/*/home.nix for actual git configuration with user settings
 
   # Bash configuration - minimal, let custom bashrc handle integrations
   programs.bash = {

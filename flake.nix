@@ -91,7 +91,7 @@
         "fschulz@framework-nixos" = home-manager.lib.homeManagerConfiguration {
           pkgs = pkgs;
           extraSpecialArgs = specialArgs;
-          modules = [ ./home-manager/home.nix ];
+          modules = [ ./hosts/framework-nixos/home.nix ];
         };
       };
       
