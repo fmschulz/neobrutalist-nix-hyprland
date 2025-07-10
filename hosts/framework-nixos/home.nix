@@ -46,6 +46,7 @@ in
     ../../home-manager/modules/hyprlock.nix
     ../../home-manager/modules/starship.nix
     ../../home-manager/modules/ssh-aliases.nix
+    ../../home-manager/modules/firefox.nix
   ];
   
   # Host-specific git configuration

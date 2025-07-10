@@ -55,6 +55,7 @@
     mpv                  # Video player
     imv                  # Image viewer
     imagemagick         # Image manipulation
+    inkscape            # Vector graphics editor
     glow                # Terminal markdown renderer
     
     # Communication
@@ -124,8 +125,6 @@
     docker-client       # Docker CLI tools
     
     # Gaming
-    lutris              # Game launcher for non-Steam games
-    heroic              # Epic Games and GOG launcher
     gamemode            # Gaming optimizations
     mangohud            # Gaming overlay for FPS/performance monitoring
     gamescope           # Gaming compositor
