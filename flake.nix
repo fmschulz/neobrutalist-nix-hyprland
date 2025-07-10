@@ -99,8 +99,6 @@
       devShells.${system}.default = pkgs.mkShell {
         buildInputs = with pkgs; [
           # Nix tools
-          nixos-rebuild
-          home-manager
           nix-tree
           nix-diff
           
@@ -128,25 +126,20 @@
         '';
       };
       
-      # Templates for creating new hosts
-      templates = {
-        host = {
-          path = ./templates/host;
-          description = "Template for a new host configuration";
-        };
-        
-        user = {
-          path = ./templates/user;
-          description = "Template for a new user configuration";
-        };
-      };
+      # Templates for creating new hosts (TODO: add templates later)
+      # templates = {
+      #   host = {
+      #     path = ./templates/host;
+      #     description = "Template for a new host configuration";
+      #   };
+      # };
       
       # Packages (custom derivations)
       packages.${system} = {
-        # Custom welcome script package
-        welcome-script = pkgs.writeShellScriptBin "welcome" ''
-          ${builtins.readFile ./home/scripts/welcome.sh}
-        '';
+        # Custom welcome script package (if needed)
+        # welcome-script = pkgs.writeShellScriptBin "welcome" ''
+        #   ${builtins.readFile ./home-manager/scripts/welcome.sh}
+        # '';
         
         # Deployment script
         deploy = pkgs.writeShellScriptBin "deploy" ''
