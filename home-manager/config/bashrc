@@ -61,11 +61,28 @@ alias free='free -h'
 alias df='df -h'
 alias du='du -h'
 
-# Server logins
-alias nelli='ssh fschulz@nelli'
-alias jgi-ont='ssh fschulz@100.84.9.12'
-alias saul="ssh fschulz@saul-p1.nersc.gov"
-alias dori="ssh fschulz@jgi-interactive08.jgi.lbl.gov"
+# Server logins with terminal compatibility
+alias nelli='TERM=xterm-256color ssh fschulz@nelli'
+alias jgi-ont='TERM=xterm-256color ssh fschulz@100.84.9.12'
+alias saul="TERM=xterm-256color ssh fschulz@saul-p1.nersc.gov"
+alias dori="TERM=xterm-256color ssh fschulz@jgi-interactive08.jgi.lbl.gov"
+
+# SSH wrapper function for better terminal compatibility
+ssh() {
+  case "$TERM" in
+    xterm-kitty|kitty)
+      TERM=xterm-256color command ssh "$@"
+      ;;
+    *)
+      command ssh "$@"
+      ;;
+  esac
+}
+
+# Alternative: Add this to ~/.ssh/config for permanent fix:
+# Host *
+#     SendEnv TERM
+#     SetEnv TERM=xterm-256color
 
 # ===== CUSTOM FUNCTIONS =====
 # Quick edit dotfiles
@@ -150,6 +167,10 @@ fi
 export PS1='\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ '
 
 # ===== DEVELOPMENT TOOLS =====
+# Default editor
+export EDITOR="vim"
+export VISUAL="vim"
+
 # Node.js
 export NODE_OPTIONS="--max-old-space-size=4096"
 

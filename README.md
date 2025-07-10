@@ -57,7 +57,10 @@ dotfiles/
 │   └── deploy.sh                   # Update management
 ├── 📚 docs/                        # Documentation
 │   └── HARDWARE.md                 # Hardware specifications
-└── 🎨 wallpapers/                   # Desktop wallpaper collection
+├── 🎨 wallpapers/                  # Desktop wallpaper collection
+└── 🖼️ images/                      # Screenshots and previews
+    ├── ws1.png                     # Workspace 1 demo
+    └── ws7.png                     # Workspace 7 demo
 ```
 
 ## 🚀 Quick Start
@@ -104,12 +107,12 @@ source aliases.sh               # Adds rebuild, deploy, nix-search, etc.
 
 ### 🗂️ Workspace Layout
 Applications automatically assign to designated workspaces:
-- **1️⃣ Terminals** - Multiple kitty terminal windows
-- **2️⃣ VS Code** - Development environment
+- **1️⃣ Terminals** - Two kitty terminals (turquoise left, yellow right)
+- **2️⃣ Yazi** - Terminal file manager  
 - **3️⃣ Firefox** - Primary web browser
-- **4️⃣ Yazi** - Terminal file manager
+- **4️⃣ VS Code** - Development environment
 - **5️⃣ Chromium** - Secondary browser
-- **6️⃣ System Monitor** - btop system monitoring
+- **6️⃣ btop** - System monitoring
 - **7️⃣ Slack** - Team communication
 - **8️⃣ Obsidian** - Note-taking and knowledge management
 - **9️⃣ YouTube Music** - Music streaming
@@ -117,11 +120,20 @@ Applications automatically assign to designated workspaces:
 ## 🎨 Neo-Brutalist Theme
 
 The entire desktop follows a consistent neo-brutalist aesthetic:
-- **Colors**: Bold yellows (#FFBE0B), hot pink (#FF006E), blacks (#000000)
+- **Colors**: Bold yellows (#FFBE0B), hot pink (#FF006E), turquoise (#06FFA5), blacks (#000000)  
 - **Typography**: JetBrains Mono Nerd Font throughout
-- **Borders**: Thick (3-4px) black borders everywhere
-- **Shapes**: Sharp corners, no rounded elements (except Hyprland windows)
+- **Borders**: Thick (3-4px) black borders everywhere with drop shadows
+- **Shapes**: Sharp corners, no rounded elements
 - **Contrast**: High contrast for maximum visibility
+
+### Theme Preview
+
+<div align="center">
+  <img src="images/ws1.png" alt="Workspace 1 - Dual Terminals" width="45%">
+  <img src="images/ws7.png" alt="Workspace 7 - Slack" width="45%">
+  <br>
+  <em>Left: Workspace 1 with dual terminals (turquoise/yellow) | Right: Workspace 7 with Slack</em>
+</div>
 
 ## 📦 Included Software
 
