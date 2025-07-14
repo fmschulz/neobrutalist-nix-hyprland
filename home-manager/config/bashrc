@@ -55,7 +55,6 @@ alias pxg="pixi global"
 # Meeting recording and transcription
 alias meeting='meeting-notes'
 alias record='record-audio'
-alias qrecord='quick-record'  # More reliable recording
 alias transcribe='transcribe-audio'
 alias meeting-help='meeting-notes -h'
 

@@ -172,7 +172,7 @@
     logind = {
       lidSwitch = "suspend";          # Suspend when lid is closed
       lidSwitchDocked = "suspend";    # Suspend even when docked/external display connected
-      lidSwitchExternalPower = "suspend"; # Suspend even when on AC power
+      lidSwitchExternalPower = lib.mkForce "suspend"; # Override hardware default to suspend even when on AC power
       extraConfig = ''
         HandlePowerKey=suspend
         HandleSuspendKey=suspend

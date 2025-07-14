@@ -60,6 +60,10 @@ in
       core.editor = "code --wait";
       push.autoSetupRemote = true;
       
+      # GitHub CLI authentication
+      credential."https://github.com".helper = "!gh auth git-credential";
+      credential."https://gist.github.com".helper = "!gh auth git-credential";
+      
       # Framework-specific settings
       user.signingkey = ""; # TODO: Add GPG key
       commit.gpgsign = false; # TODO: Enable after adding key

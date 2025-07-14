@@ -91,11 +91,6 @@
     executable = true;
   };
   
-  home.file.".config/scripts/quick-record" = {
-    source = ./scripts/quick-record.sh;
-    executable = true;
-  };
-  
   # Make scripts executable
   home.activation.makeScriptsExecutable = lib.hm.dag.entryAfter ["writeBoundary"] ''
     chmod +x $HOME/.config/scripts/*.sh 2>/dev/null || true
