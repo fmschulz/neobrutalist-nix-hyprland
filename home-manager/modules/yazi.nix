@@ -31,7 +31,7 @@
       desc = "Create a new file"
       
       [[manager.prepend_keymap]]
-      on = ["<C-N>"]
+      on = ["a"]
       run = "shell 'mkdir \"$0\"' --confirm"
       desc = "Create a new directory"
       
@@ -47,43 +47,43 @@
       
       [[manager.prepend_keymap]]
       on = ["e"]
-      run = "shell 'vim \"$0\"' --block --confirm"
-      desc = "Edit with vim"
+      run = "shell 'nano \"$0\"' --block --confirm"
+      desc = "Edit with nano"
     '';
     
     ".config/yazi/theme.toml".text = ''
       [mgr]
-      cwd = { fg = "#000000", bg = "#FFBE0B", bold = true }
+      cwd = { fg = "#FFFFFF", bg = "#4D4D4D", bold = true }
       
-      hovered = { fg = "#FFBE0B", bg = "#FF006E", bold = true }
+      hovered = { fg = "#2D2D2D", bg = "#06FFA5", bold = true }
       preview_hovered = { underline = true }
       
-      find_keyword = { fg = "#FFBE0B", bg = "#FF006E", bold = true }
-      find_position = { fg = "#FF006E", bg = "#FFBE0B", bold = true }
+      find_keyword = { fg = "#2D2D2D", bg = "#06FFA5", bold = true }
+      find_position = { fg = "#06FFA5", bg = "#4D4D4D", bold = true }
       
-      marker_selected = { fg = "#06FFA5", bg = "#000000", bold = true }
-      marker_copied = { fg = "#FFB700", bg = "#000000", bold = true }
-      marker_cut = { fg = "#FF006E", bg = "#000000", bold = true }
+      marker_selected = { fg = "#06FFA5", bg = "#2D2D2D", bold = true }
+      marker_copied = { fg = "#FFB700", bg = "#2D2D2D", bold = true }
+      marker_cut = { fg = "#FF006E", bg = "#2D2D2D", bold = true }
       
-      tab_active = { fg = "#000000", bg = "#FF006E", bold = true }
-      tab_inactive = { fg = "#000000", bg = "#FFBE0B" }
+      tab_active = { fg = "#FFFFFF", bg = "#FF006E", bold = true }
+      tab_inactive = { fg = "#FFFFFF", bg = "#4D4D4D" }
       tab_width = 1
       
       border_symbol = "│"
-      border_style = { fg = "#000000" }
+      border_style = { fg = "#FFFFFF" }
       
       [status]
       separator_open = ""
       separator_close = ""
-      separator_style = { fg = "#000000", bg = "#FFBE0B" }
+      separator_style = { fg = "#FFFFFF", bg = "#4D4D4D" }
       
-      mode_normal = { fg = "#000000", bg = "#FFBE0B", bold = true }
-      mode_select = { fg = "#000000", bg = "#FF006E", bold = true }
-      mode_unset = { fg = "#000000", bg = "#3185FC", bold = true }
+      mode_normal = { fg = "#FFFFFF", bg = "#4D4D4D", bold = true }
+      mode_select = { fg = "#FFFFFF", bg = "#FF006E", bold = true }
+      mode_unset = { fg = "#FFFFFF", bg = "#3185FC", bold = true }
       
       progress_label = { bold = true }
-      progress_normal = { fg = "#FFBE0B", bg = "#000000" }
-      progress_error = { fg = "#FF006E", bg = "#000000" }
+      progress_normal = { fg = "#06FFA5", bg = "#2D2D2D" }
+      progress_error = { fg = "#FF006E", bg = "#2D2D2D" }
       
       permissions_t = { fg = "#3185FC" }
       permissions_r = { fg = "#FFB700" }
@@ -94,13 +94,13 @@
       [input]
       border = { fg = "#FF006E" }
       title = { fg = "#FF006E" }
-      value = { fg = "#000000" }
-      selected = { bg = "#FFB700" }
+      value = { fg = "#FFFFFF" }
+      selected = { bg = "#4D4D4D" }
       
       [select]
       border = { fg = "#FF006E" }
       active = { fg = "#FF006E" }
-      inactive = { fg = "#000000" }
+      inactive = { fg = "#FFFFFF" }
       
       [tasks]
       border = { fg = "#FF006E" }
@@ -145,6 +145,53 @@
         
         { name = "*/", fg = "#3185FC", bold = true },
       ]
+    '';
+    
+    ".config/yazi/open.toml".text = ''
+      # Text files
+      [[open.rules]]
+      mime = "text/*"
+      use = "edit"
+      
+      # Image files
+      [[open.rules]]
+      mime = "image/*"
+      use = "image"
+      
+      # PDF files
+      [[open.rules]]
+      mime = "application/pdf"
+      use = "pdf"
+      
+      # Video files
+      [[open.rules]]
+      mime = "video/*"
+      use = "video"
+      
+      # Audio files
+      [[open.rules]]
+      mime = "audio/*"
+      use = "audio"
+      
+      [open.opener.edit]
+      run = 'nano "$@"'
+      block = true
+      
+      [open.opener.image]
+      run = 'imv "$@"'
+      orphan = true
+      
+      [open.opener.pdf]
+      run = 'zathura "$@"'
+      orphan = true
+      
+      [open.opener.video]
+      run = 'mpv "$@"'
+      orphan = true
+      
+      [open.opener.audio]
+      run = 'mpv "$@"'
+      orphan = true
     '';
   };
 }

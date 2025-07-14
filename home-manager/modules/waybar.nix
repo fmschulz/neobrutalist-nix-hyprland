@@ -278,22 +278,4 @@
       };
     };
   };
-  
-  # Ensure waybar starts with Hyprland
-  systemd.user.services.waybar = {
-    Unit = {
-      Description = "Waybar";
-      Documentation = [ "https://github.com/Alexays/Waybar/wiki" ];
-      PartOf = [ "graphical-session.target" ];
-    };
-    Service = {
-      ExecStart = "${pkgs.waybar}/bin/waybar";
-      ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR2 $MAINPID";
-      Restart = "on-failure";
-      RestartSec = 1;
-    };
-    Install = {
-      WantedBy = [ "hyprland-session.target" ];
-    };
-  };
 }

@@ -1,39 +1,16 @@
 { config, pkgs, lib, ... }:
 
 {
-  # Note: Hyprland package installation should be in system configuration
-  # This module only manages the user configuration
-  
+  # MINIMAL WORKING CONFIG - DO NOT MODIFY WITHOUT TESTING
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-      # Monitor configuration
+      # Monitor configuration - Framework 13 AMD proper resolution
       monitor = [
-        # Internal display (Framework 13 AMD)
         "eDP-1,2880x1920@120,0x0,1.5"
-        # External monitors - common configurations
         "DP-1,preferred,auto,1.0"
-        "DP-2,preferred,auto,1.0"
-        "DP-3,preferred,auto,1.0"
-        "DP-4,preferred,auto,1.0"
-        "DP-5,preferred,auto,1.0"
-        "DP-6,preferred,auto,1.0"
-        "DP-7,preferred,auto,1.0"
-        "DP-8,preferred,auto,1.0"
-        "DP-9,preferred,auto,1.0"
-        "DP-10,preferred,auto,1.0"
-        "DP-11,preferred,auto,1.0"
-        "DP-12,preferred,auto,1.0"
+        "DP-2,preferred,auto,1.0" 
         "HDMI-A-1,preferred,auto,1.0"
-        "HDMI-A-2,preferred,auto,1.0"
-        "HDMI-A-3,preferred,auto,1.0"
-        "HDMI-A-4,preferred,auto,1.0"
-        # USB-C/Thunderbolt displays
-        "USB-C-1,preferred,auto,1.0"
-        "USB-C-2,preferred,auto,1.0"
-        "USB-C-3,preferred,auto,1.0"
-        "USB-C-4,preferred,auto,1.0"
-        # Fallback for any other monitor
         ",preferred,auto,1.0"
       ];
       
@@ -42,28 +19,11 @@
       "$fileManager" = "dolphin";
       "$menu" = "wofi -c ~/.config/wofi/config -s ~/.config/wofi/style.css";
       
-      # Environment variables
+      # Minimal environment variables - SAFE
       env = [
         "XCURSOR_SIZE,24"
-        "HYPRCURSOR_SIZE,24"
-        "WLR_NO_HARDWARE_CURSORS,1"
         "XCURSOR_THEME,Bibata-Modern-Ice"
       ];
-      
-      # Load borders-plus-plus plugin for neo-brutalist shadow effect
-      plugin = {
-        borders-plus-plus = {
-          add_borders = 2;  # Add 2 additional border layers
-          
-          # Border 1 (shadow layer) - Offset to create shadow effect
-          "col.border_1" = "rgba(000000ee)";  # Black shadow
-          border_size_1 = 6;
-          
-          # Border 2 (deeper shadow)
-          "col.border_2" = "rgba(000000aa)";  # Darker shadow
-          border_size_2 = 3;
-        };
-      };
       
       # General settings
       general = {
@@ -154,6 +114,7 @@
       # Variables
       "$mainMod" = "SUPER";
       
+      
       # Key bindings
       bind = [
         # Core functionality
@@ -164,15 +125,23 @@
         "$mainMod, J, togglesplit"
         "$mainMod, F, fullscreen"
         
+        # Window sizing shortcuts
+        "$mainMod SHIFT, H, resizeactive, -50% 0"    # Reduce width by 50%
+        "$mainMod SHIFT, V, resizeactive, 0 -50%"    # Reduce height by 50%
+        "$mainMod CTRL, H, resizeactive, 100% 0"     # Double width
+        "$mainMod CTRL, V, resizeactive, 0 100%"     # Double height
+        "$mainMod SHIFT, C, centerwindow"             # Center floating window
+        "$mainMod, R, submap, resize"                 # Enter resize mode
+        
         # Application shortcuts
         "$mainMod, Return, exec, $terminal"
         "$mainMod, E, exec, $fileManager"
         "$mainMod, D, exec, $menu"
         
         # Wallpaper cycling (all monitors)
-        "$mainMod, W, exec, swww img ~/dotfiles/home-manager/wallpapers/wp0.png --outputs all"
-        "$mainMod SHIFT, W, exec, swww img ~/dotfiles/home-manager/wallpapers/wp1.png --outputs all"
-        "$mainMod CTRL, W, exec, swww img ~/dotfiles/home-manager/wallpapers/wp2.png --outputs all"
+        "$mainMod, W, exec, swww img ~/dotfiles/home-manager/wallpapers/wp0.png --outputs eDP-1,DP-10"
+        "$mainMod SHIFT, W, exec, swww img ~/dotfiles/home-manager/wallpapers/wp1.png --outputs eDP-1,DP-10"
+        "$mainMod CTRL, W, exec, swww img ~/dotfiles/home-manager/wallpapers/wp2.png --outputs eDP-1,DP-10"
         
         # Clipboard history
         "$mainMod, C, exec, cliphist list | wofi --dmenu | cliphist decode | wl-copy"
@@ -217,6 +186,12 @@
         "$mainMod, S, togglespecialworkspace, magic"
         "$mainMod SHIFT, S, movetoworkspace, special:magic"
         
+        # Monitor controls
+        "$mainMod, period, focusmonitor, +1"     # Focus next monitor
+        "$mainMod, comma, focusmonitor, -1"      # Focus previous monitor
+        "$mainMod SHIFT, period, movewindow, mon:+1"  # Move window to next monitor
+        "$mainMod SHIFT, comma, movewindow, mon:-1"   # Move window to previous monitor
+        
         # Scroll through workspaces
         "$mainMod, mouse_down, workspace, e+1"
         "$mainMod, mouse_up, workspace, e-1"
@@ -225,6 +200,17 @@
         "$mainMod SHIFT, left, workspace, e-1"
         "$mainMod SHIFT, right, workspace, e+1"
         "$mainMod SHIFT, up, exec, ~/.config/hypr/workspace-overview.sh"
+        
+        # Window resizing
+        "$mainMod CTRL, left, resizeactive, -20 0"
+        "$mainMod CTRL, right, resizeactive, 20 0"
+        "$mainMod CTRL, up, resizeactive, 0 -20"
+        "$mainMod CTRL, down, resizeactive, 0 20"
+        
+        # Quick actions
+        "$mainMod ALT, L, exec, hyprlock"
+        "$mainMod ALT, P, exec, wlogout"
+        "$mainMod ALT, R, exec, ~/.config/hypr/reload.sh"
         
         # Screenshot bindings
         ", Print, exec, grim -g \"$(slurp)\" - | wl-copy"
@@ -284,8 +270,11 @@
       # Startup applications with workspace assignments
       exec-once = [
         # Essential services
+        "waybar"
         "mako"
         "hypridle"
+        "blueman-applet"
+        "nm-applet"
         
         # Clipboard history daemon
         "wl-paste --type text --watch cliphist store"
@@ -293,16 +282,16 @@
         
         # Wallpaper daemon and set wallpaper (with multi-monitor support)
         "swww-daemon"
-        "sleep 1 && swww img ~/dotfiles/home-manager/wallpapers/wp0.png --outputs all"
+        "sleep 3 && swww img ~/dotfiles/home-manager/wallpapers/wp0.png --outputs eDP-1,DP-10"
         
         # Workspace applications (launched silently)
-        "[workspace 1 silent] kitty --override background=#06FFA5 --override foreground=#FFBE0B"
-        "[workspace 1 silent] kitty --override background=#FFBE0B --override foreground=#000000"
-        "[workspace 2 silent] kitty --title 'Yazi: File Manager' -e yazi"
+        "[workspace 1 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF"
+        "[workspace 1 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF"
+        "[workspace 2 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF --title 'Yazi: File Manager' -e yazi"
         "[workspace 3 silent] firefox"
         "[workspace 4 silent] code"
         "[workspace 5 silent] chromium"
-        "[workspace 6 silent] kitty --title 'btop - System Monitor' -e btop"
+        "[workspace 6 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF --title 'btop - System Monitor' -e btop"
         
         # Set cursor theme for GTK apps
         "gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Ice'"
@@ -312,7 +301,26 @@
     
     # Additional configuration files
     extraConfig = ''
-      # Any additional configuration that doesn't fit in settings
+      # Resize submap
+      submap = resize
+      
+      # Resize bindings
+      binde = , right, resizeactive, 10 0
+      binde = , left, resizeactive, -10 0
+      binde = , up, resizeactive, 0 -10
+      binde = , down, resizeactive, 0 10
+      
+      # Alternative vim-style resize
+      binde = , l, resizeactive, 10 0
+      binde = , h, resizeactive, -10 0
+      binde = , k, resizeactive, 0 -10
+      binde = , j, resizeactive, 0 10
+      
+      # Exit resize mode
+      bind = , escape, submap, reset
+      bind = SUPER, R, submap, reset
+      
+      submap = reset
     '';
   };
   
@@ -350,7 +358,7 @@
             in_window = 0
           }
           END {
-            # Handle last window if file doesn't end with blank line
+            # Handle last window if file doesnt end with blank line
             if (in_window && current_ws == ws && current_class != "") {
               print current_class
             }

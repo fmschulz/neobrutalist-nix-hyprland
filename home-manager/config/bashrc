@@ -1,6 +1,10 @@
 # Custom bashrc configuration for dotfiles
 # This file is managed by home-manager and can be committed to git
 
+# ===== PATH CONFIGURATION =====
+# Add scripts directory to PATH
+export PATH="$HOME/.config/scripts:$PATH"
+
 # ===== CUSTOM ALIASES =====
 # Modern CLI tool replacements
 alias ls='eza --color=auto'
@@ -47,6 +51,13 @@ alias pxr="pixi run"
 alias pxs="pixi shell"
 alias pxa="pixi add"
 alias pxg="pixi global"
+
+# Meeting recording and transcription
+alias meeting='meeting-notes'
+alias record='record-audio'
+alias qrecord='quick-record'  # More reliable recording
+alias transcribe='transcribe-audio'
+alias meeting-help='meeting-notes -h'
 
 # Clipboard aliases
 alias pbcopy='wl-copy'
@@ -159,6 +170,24 @@ fi
 # ===== SHELL OPTIONS =====
 # Commands that should be applied only for interactive shells.
 # [[ $- == *i* ]] || return  # Commented out - home-manager handles this
+
+# History settings
+export HISTSIZE=10000
+export HISTFILESIZE=20000
+export HISTCONTROL=ignoreboth:erasedups
+export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help:history:clear"
+export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
+
+# Append to history file instead of overwriting
+shopt -s histappend
+# Check window size after each command
+shopt -s checkwinsize
+# Correct minor spelling errors in cd
+shopt -s cdspell
+# Include dotfiles in pathname expansion
+shopt -s dotglob
+# Case-insensitive pathname expansion
+shopt -s nocaseglob
 
 # ===== PROMPT CUSTOMIZATION =====
 # This will be overridden by starship if it's active

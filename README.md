@@ -110,15 +110,66 @@ source aliases.sh               # Adds rebuild, deploy, nix-search, etc.
 
 ### 🗂️ Workspace Layout
 Applications automatically assign to designated workspaces:
-- **1️⃣ Terminals** - Two kitty terminals (turquoise left, yellow right)
-- **2️⃣ Yazi** - Terminal file manager  
+- **1️⃣ Terminals** - Two kitty terminals (dark grey theme by default)
+- **2️⃣ Yazi** - Terminal file manager (dark grey theme)
 - **3️⃣ Firefox** - Primary web browser
 - **4️⃣ VS Code** - Development environment
 - **5️⃣ Chromium** - Secondary browser
-- **6️⃣ btop** - System monitoring
+- **6️⃣ btop** - System monitoring (dark grey theme)
 - **7️⃣ Slack** - Team communication
 - **8️⃣ Obsidian** - Note-taking and knowledge management
 - **9️⃣ YouTube Music** - Music streaming
+
+## 🎙️ Meeting Recording & Transcription
+
+Built-in meeting recording with OpenAI Whisper for automatic transcription:
+
+### Quick Start
+```bash
+# Record a meeting with automatic transcription
+meeting team-standup
+
+# Use different Whisper models
+meeting -m tiny quick-sync      # Fastest, less accurate
+meeting -m base team-meeting    # Balanced (default)
+meeting -m small client-call    # Best accuracy for 2GB VRAM
+
+# Just record audio
+record                          # Creates timestamped .mp3
+
+# Transcribe existing audio
+transcribe meeting.mp3
+```
+
+### Features
+- **One-command recording**: Press Ctrl+C to stop
+- **Automatic transcription**: Uses Whisper AI model
+- **Smart summary**: Creates markdown with sections for notes/action items
+- **CPU-optimized**: Works great on Framework 13's integrated GPU
+- **File organization**: Saves to `~/Documents/meetings/`
+
+## 🎮 External GPU Support
+
+Full support for external GPUs via Thunderbolt:
+
+### Features
+- **ROCm Support**: OpenCL and compute capabilities
+- **Automatic Detection**: eGPU recognized on connection
+- **Performance Tools**: `nvtop`, `radeontop` for monitoring
+- **Steam Integration**: `steam-egpu` script for gaming
+
+### Usage
+```bash
+# Setup eGPU (one-time)
+./scripts/setup-egpu.sh
+
+# Launch Steam with eGPU
+steam-egpu
+
+# Monitor GPU performance
+radeontop   # AMD GPU stats
+nvtop       # General GPU monitoring
+```
 
 ## 🎨 Neo-Brutalist Theme
 
@@ -142,22 +193,31 @@ The entire desktop follows a consistent neo-brutalist aesthetic:
 
 ### Development
 - **Editors**: VS Code, Vim, Claude Code (latest)
-- **Languages**: Python, Node.js, Rust toolchain
+- **Languages**: Python, Node.js, Rust toolchain, Go
 - **Tools**: Git, Lazygit, Delta, GitHub CLI
 - **Scientific**: Quarto, Pixi, UV (from unstable)
+- **Container Tools**: Docker, Podman, Buildah, Lazydocker
+
+### AI & Machine Learning
+- **OpenAI Whisper**: Speech recognition for meeting transcription
+- **Meeting Tools**: Custom recording & transcription scripts
+- **Audio Processing**: FFmpeg, Sox for recording
 
 ### Communication
 - Slack, Discord, Signal, Zoom
 - Firefox, Chromium browsers
 
 ### Productivity
-- Obsidian, YouTube Music
-- Yazi terminal file manager
+- Obsidian (note-taking)
+- YouTube Music
+- Yazi (terminal file manager)
+- Inkscape (vector graphics)
 
 ### System Tools
-- Fastfetch, btop, htop monitoring
-- Framework-specific utilities
-- Docker, Tailscale, SSH tools
+- **Monitoring**: Fastfetch, btop, htop, nvtop, radeontop
+- **Hardware**: Framework-specific utilities, lm_sensors
+- **GPU Support**: ROCm, OpenCL for AMD GPUs
+- **Networking**: Tailscale, SSH tools, nmap, traceroute
 
 ## 🏗️ Architecture
 
@@ -346,7 +406,9 @@ nix flake check                      # Validate configurations
 
 ## 📚 Documentation
 
+- [Keybindings Guide](docs/KEYBINDINGS.md) - Complete keyboard shortcuts reference
 - [Hardware Specifications](docs/HARDWARE.md)
+- [eGPU Setup Guide](docs/EGPU-SETUP.md)
 - [Secrets Management](secrets/README.md)
 - [Bootstrap Guide](scripts/bootstrap.sh)
 - [Deployment Guide](scripts/deploy.sh)
@@ -357,6 +419,18 @@ nix flake check                      # Validate configurations
 2. Create a feature branch
 3. Test on a similar system setup
 4. Submit a pull request with clear description
+
+## ⌨️ Quick Keybinding Reference
+
+| Function | Keybinding |
+|----------|------------|
+| **Applications** | `Super + Return` (terminal), `Super + D` (launcher), `Super + E` (files) |
+| **Windows** | `Super + Q` (close), `Super + F` (fullscreen), `Super + V` (float) |
+| **Workspaces** | `Super + 1-9` (switch), `Super + Shift + 1-9` (move window) |
+| **Monitors** | `Super + ,/.` (focus), `Super + Shift + ,/.` (move window) |
+| **Recording** | `meeting <name>` (record + transcribe), `record` (audio only) |
+
+📖 **Complete guide**: [docs/KEYBINDINGS.md](docs/KEYBINDINGS.md)
 
 ## 📄 License
 

@@ -12,6 +12,15 @@ in
     # Hardware configuration
     ../../hardware/framework-13-amd.nix
     
+    # eGPU support
+    ../../hardware/egpu-support.nix
+    
+    # ROCm support for AI workloads
+    ../../hardware/rocm-support.nix
+    
+    # eGPU driver binding fix
+    ../../hardware/egpu-driver-fix.nix
+    
     # Original hardware scan (auto-generated)
     ../../system/hardware/hardware-configuration.nix
     
@@ -28,11 +37,24 @@ in
     networkmanager.enable = true;
     wireless.enable = false;  # Using NetworkManager instead
     
-    # Host-specific firewall settings
+    # Host-specific firewall settings - Enhanced security
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 ]; # SSH
       allowedUDPPorts = [ ];
+      
+      # Enhanced security settings
+      allowPing = false;
+      logReversePathDrops = true;
+      logRefusedConnections = false;  # Reduce log spam
+      logRefusedPackets = false;
+      
+      # Rate limiting for SSH
+      extraCommands = ''
+        # Rate limit SSH connections
+        iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW -m recent --set --name SSH
+        iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW -m recent --update --seconds 60 --hitcount 3 --name SSH -j DROP
+      '';
     };
   };
   

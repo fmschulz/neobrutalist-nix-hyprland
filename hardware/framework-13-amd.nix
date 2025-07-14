@@ -28,6 +28,20 @@
         # ROCm OpenCL support (updated package names)
         rocmPackages.clr
         rocmPackages.clr.icd
+        # Hardware video acceleration
+        libva
+        libvdpau-va-gl
+        vaapiVdpau
+        # AMD-specific video acceleration  
+        mesa
+        # GPU monitoring
+        radeontop
+        # Additional AMD tools
+        rocmPackages.rocm-smi
+      ];
+      extraPackages32 = with pkgs.pkgsi686Linux; [
+        libva
+        vaapiVdpau
       ];
     };
     
@@ -91,7 +105,8 @@
     upower.enable = true;
     
     # Framework-optimized power management
-    power-profiles-daemon.enable = true;
+    # Power management - disabled in favor of TLP
+    power-profiles-daemon.enable = false;
     
     # Framework-specific thermal management
     thermald.enable = true;
@@ -112,9 +127,13 @@
   # Framework-specific environment optimizations
   environment = {
     variables = {
-      # AMD GPU optimizations
+      # AMD GPU optimizations (base configuration)
       AMD_VULKAN_ICD = "RADV";
       VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/radeon_icd.x86_64.json";
+      
+      # eGPU support variables (overridden by eGPU module when active)
+      __GLX_VENDOR_LIBRARY_NAME = "amd";
+      MESA_LOADER_DRIVER_OVERRIDE = "radeonsi";
     };
     
     systemPackages = with pkgs; [

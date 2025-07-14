@@ -32,6 +32,8 @@ in
   imports = [
     ../../home-manager/modules/packages.nix
     ../../home-manager/modules/hyprland.nix
+    ../../home-manager/modules/hyprland-egpu.nix
+    ../../home-manager/modules/ai-tools.nix
     ../../home-manager/modules/kitty.nix
     ../../home-manager/modules/yazi.nix
     ../../home-manager/modules/fastfetch.nix

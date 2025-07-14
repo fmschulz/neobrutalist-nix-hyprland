@@ -31,15 +31,14 @@ case $COMMAND in
         ;;
     "home" | "h")
         info "Rebuilding home-manager configuration..."
-        home-manager switch --flake ".#$USER@$HOST"
+        # Since home-manager is integrated with NixOS, we need to rebuild the system
+        # but only the home-manager part will be updated if system hasn't changed
+        sudo nixos-rebuild switch --flake ".#$HOST"
         success "Home-manager rebuilt successfully!"
         ;;
     "all" | "a" | *)
         info "Rebuilding system and home-manager..."
         sudo nixos-rebuild switch --flake ".#$HOST"
-        success "System rebuilt successfully!"
-        info "Rebuilding home-manager..."
-        home-manager switch --flake ".#$USER@$HOST" 
         success "All configurations rebuilt successfully!"
         ;;
 esac
@@ -50,5 +49,6 @@ if [[ "$COMMAND" =~ ^(system|sys|s|all|a)$ ]] || [[ -z "$COMMAND" ]]; then
     echo "System: $(sudo nix-env --list-generations --profile /nix/var/nix/profiles/system | tail -1 | awk '{print $1}')"
 fi
 if [[ "$COMMAND" =~ ^(home|h|all|a)$ ]] || [[ -z "$COMMAND" ]]; then
-    echo "Home: $(home-manager generations | head -1 | awk '{print $5}' | cut -d'-' -f1)"
+    # Home-manager generations are part of system generations when integrated
+    echo "Home: Integrated with system generation"
 fi

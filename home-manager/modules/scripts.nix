@@ -75,9 +75,33 @@
     '';
   };
   
+  # Copy meeting recording scripts
+  home.file.".config/scripts/meeting-notes" = {
+    source = ./scripts/meeting-notes.sh;
+    executable = true;
+  };
+  
+  home.file.".config/scripts/record-audio" = {
+    source = ./scripts/record-audio.sh;
+    executable = true;
+  };
+  
+  home.file.".config/scripts/transcribe-audio" = {
+    source = ./scripts/transcribe-audio.sh;
+    executable = true;
+  };
+  
+  home.file.".config/scripts/quick-record" = {
+    source = ./scripts/quick-record.sh;
+    executable = true;
+  };
+  
   # Make scripts executable
   home.activation.makeScriptsExecutable = lib.hm.dag.entryAfter ["writeBoundary"] ''
     chmod +x $HOME/.config/scripts/*.sh 2>/dev/null || true
+    chmod +x $HOME/.config/scripts/meeting-notes 2>/dev/null || true
+    chmod +x $HOME/.config/scripts/record-audio 2>/dev/null || true
+    chmod +x $HOME/.config/scripts/transcribe-audio 2>/dev/null || true
   '';
   
   # Add scripts directory to PATH

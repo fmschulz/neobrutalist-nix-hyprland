@@ -26,14 +26,28 @@
       "rtc_cmos.use_acpi_alarm=1"   # Better RTC wake
       "mem_sleep_default=deep"      # Better suspend
       "module_blacklist=hid_sensor_hub"  # Fixes ambient light sensor issues
+      "amd_iommu=on"                # Enable IOMMU for better virtualization
+      "iommu=pt"                    # IOMMU passthrough mode
+      "nvme_core.default_ps_max_latency_us=0"  # Better NVMe performance
+      "transparent_hugepage=madvise" # Better memory performance
+      # eGPU support parameters
+      "pcie_ports=native"           # Enable PCIe hotplug for eGPU
+      "pcie_port_pm=off"           # Disable PCIe power management for eGPU stability
     ];
     
     # Use latest kernel for best Framework support
     kernelPackages = pkgs.linuxPackages_latest;
     
     # Additional kernel modules
-    kernelModules = [ "kvm-amd" ];
+    kernelModules = [ "kvm-amd" "thunderbolt" ];
     extraModulePackages = [ ];
+  };
+  
+  # Zram configuration for better memory usage
+  zramSwap = {
+    enable = true;
+    memoryPercent = 25;  # Use 25% of RAM for zram
+    algorithm = "zstd";  # Better compression
   };
 
   # Enable the X server for XWayland support
@@ -73,11 +87,43 @@
   # Power management for Framework
   powerManagement = {
     enable = true;
-    cpuFreqGovernor = "powersave";
+    cpuFreqGovernor = "schedutil";  # Better than powersave for modern CPUs
+    powertop.enable = true;
   };
 
   # Thermal management
   services.thermald.enable = true;
+  
+  # Advanced power management with TLP
+  services.tlp = {
+    enable = true;
+    settings = {
+      # CPU settings
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+      
+      # Framework-specific optimizations
+      PLATFORM_PROFILE_ON_AC = "performance";
+      PLATFORM_PROFILE_ON_BAT = "low-power";
+      
+      # USB autosuspend (be careful with this)
+      USB_AUTOSUSPEND = 1;
+      USB_EXCLUDE_BTUSB = 1;  # Don't suspend Bluetooth
+      
+      # PCIe power management
+      RUNTIME_PM_ON_AC = "auto";
+      RUNTIME_PM_ON_BAT = "auto";
+      
+      # Battery charge thresholds (helps battery longevity)
+      START_CHARGE_THRESH_BAT0 = 75;
+      STOP_CHARGE_THRESH_BAT0 = 80;
+    };
+  };
+  
+  # Disable power-profiles-daemon as it conflicts with TLP
+  services.power-profiles-daemon.enable = false;
 
   # Audio with PipeWire
   services.pipewire = {
@@ -91,7 +137,14 @@
   # Networking
   networking = {
     hostName = "framework-nixos";
-    networkmanager.enable = true;
+    networkmanager = {
+      enable = true;
+      # Enable captive portal handling
+      plugins = with pkgs; [
+        networkmanager-openconnect
+        networkmanager-openvpn
+      ];
+    };
     wireless.enable = false;  # Disable wpa_supplicant (conflicts with NetworkManager)
   };
 
@@ -115,8 +168,29 @@
     # Printing
     printing.enable = true;
     
+    # Lid close behavior - suspend on lid close
+    logind = {
+      lidSwitch = "suspend";          # Suspend when lid is closed
+      lidSwitchDocked = "suspend";    # Suspend even when docked/external display connected
+      lidSwitchExternalPower = "suspend"; # Suspend even when on AC power
+      extraConfig = ''
+        HandlePowerKey=suspend
+        HandleSuspendKey=suspend
+        HandleHibernateKey=hibernate
+        IdleAction=suspend
+        IdleActionSec=30min
+      '';
+    };
+    
     # SSH
-    openssh.enable = true;
+    openssh = {
+      enable = true;
+      settings = {
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
+        PermitRootLogin = "no";
+      };
+    };
     
     # Input handling
     libinput.enable = true; 
@@ -124,8 +198,18 @@
     # Location services
     geoclue2.enable = true;
 
-    # Power profiles
-    power-profiles-daemon.enable = true;
+    
+    # SSD maintenance
+    fstrim.enable = true;
+    
+  };
+  
+  # Firewall configuration
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 22 ];  # SSH
+    allowedUDPPorts = [ ];
+    # Tailscale will handle its own firewall rules
   };
 
   # Time zone and localization
@@ -163,12 +247,34 @@
     config.common.default = "*";
   };
 
-  # Security
+  # Security - Enhanced hardening
   security = {
     polkit.enable = true;
     pam.services.swaylock = {};
     pam.services.hyprlock = {};
     pam.services.greetd = {};
+    
+    # Additional security hardening
+    sudo = {
+      enable = true;
+      wheelNeedsPassword = true;
+      execWheelOnly = true;
+    };
+    
+    # AppArmor security framework
+    apparmor = {
+      enable = true;
+      killUnconfinedConfinables = true;
+    };
+    
+    # Real-time kit for better audio performance
+    rtkit.enable = true;
+    
+    # Audit system calls
+    auditd.enable = true;
+    
+    # Protect kernel parameters
+    protectKernelImage = true;
   };
 
   # Environment variables for Wayland
@@ -195,23 +301,29 @@
     nerd-fonts.hack
     nerd-fonts.iosevka
     nerd-fonts.meslo-lg
+    nerd-fonts.ubuntu-mono
+    nerd-fonts.sauce-code-pro
+    # Additional fonts for better coverage
+    inter
+    roboto
+    ubuntu_font_family
+    liberation_ttf
+    source-sans-pro
+    source-serif-pro
   ];
 
-  # Essential packages with unstable overlay support
+  # Essential system packages only (user packages managed by home-manager)
   environment.systemPackages = with pkgs; [
-    # Framework tools
+    # Framework hardware tools (system-level required)
     framework-tool
     libinput
     
-    # Modern tools
-    htop
-    btop
+    # System hardware control tools
     brightnessctl
     acpi
     powertop
-    fastfetch  # Modern replacement for neofetch
+    fastfetch
     libsForQt5.qt5ct
-    libsForQt5.qtstyleplugin-kvantum
     
     # Cursor themes
     bibata-cursors
@@ -237,6 +349,9 @@
     networkmanagerapplet
     blueman
     
+    # Network captive portal support
+    captive-browser
+    
     # File managers
     kdePackages.dolphin
     kdePackages.qtsvg
@@ -259,9 +374,6 @@
     nodejs_22  # Explicit version for stability
     docker-compose
     apptainer
-    unstable.pixi  # Latest conda alternative
-    unstable.uv    # Latest Python package manager
-    ruff           # Fast Python linter
     
     # Browsers
     firefox

@@ -37,3 +37,6 @@ secrets/.env.local
 .cache/
 __pycache__/
 *.pyc
+
+# Temporary archive directory
+.tmp/
