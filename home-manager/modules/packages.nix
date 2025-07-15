@@ -65,8 +65,15 @@
     
     # Scientific/Data Tools - INCLUDING UNSTABLE
     quarto
-    unstable.pixi        # Latest conda alternative
+    # unstable.pixi        # Latest conda alternative - replaced with FHS wrapper below
     unstable.uv          # Latest Python package manager
+    
+    # Pixi with FHS wrapper for NixOS compatibility
+    (pkgs.buildFHSEnv {
+      name = "pixi";
+      runScript = "pixi";
+      targetPkgs = pkgs: with pkgs; [ unstable.pixi ];
+    })
     
     # Language servers and development tools
     nil                  # Nix language server
@@ -116,7 +123,6 @@
     
     # Text Editors & IDEs - INCLUDING UNSTABLE
     vim
-    vscode
     unstable.claude-code  # Latest AI coding assistant
     
     # Browsers

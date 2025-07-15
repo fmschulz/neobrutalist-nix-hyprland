@@ -27,8 +27,15 @@ alias dotfiles="cd ~/dotfiles"
 alias home-config="cd ~/dotfiles/home-manager"
 alias edit-packages="code ~/dotfiles/home-manager/modules/packages.nix"
 
+# Cleanup commands
+alias clean-gens="cd ~/dotfiles && ./scripts/cleanup-generations.sh"
+alias clean-gens-aggressive="cd ~/dotfiles && ./scripts/cleanup-generations-aggressive.sh"
+alias nix-cleanup="clean-gens"
+alias nix-gc="sudo nix-collect-garbage -d"
+
 echo "Dotfiles aliases loaded! Available commands:"
 echo "  rebuild, rebuild-system, rebuild-home"
 echo "  deploy, deploy-all, deploy-update"
 echo "  nix-search, flake-check, flake-update"
 echo "  dotfiles, home-config, edit-packages"
+echo "  clean-gens, clean-gens-aggressive, nix-gc"

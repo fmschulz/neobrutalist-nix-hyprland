@@ -143,6 +143,11 @@
         "$mainMod SHIFT, W, exec, swww img ~/dotfiles/home-manager/wallpapers/wp1.png --outputs eDP-1,DP-10"
         "$mainMod CTRL, W, exec, swww img ~/dotfiles/home-manager/wallpapers/wp2.png --outputs eDP-1,DP-10"
         
+        # VS Code theme switching
+        "$mainMod, T, exec, ~/.config/scripts/vscode-theme-switch.sh cycle"
+        "$mainMod SHIFT, T, exec, ~/.config/scripts/vscode-theme-dark.sh"
+        "$mainMod CTRL, T, exec, ~/.config/scripts/vscode-theme-light.sh"
+        
         # Clipboard history
         "$mainMod, C, exec, cliphist list | wofi --dmenu | cliphist decode | wl-copy"
         

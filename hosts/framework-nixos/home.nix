@@ -49,6 +49,7 @@ in
     ../../home-manager/modules/starship.nix
     ../../home-manager/modules/ssh-aliases.nix
     ../../home-manager/modules/firefox.nix
+    ../../home-manager/modules/vscode.nix
   ];
   
   # Host-specific git configuration

@@ -93,6 +93,13 @@ Complete keyboard shortcuts reference for the Neo-Brutalist NixOS configuration.
 | `Ctrl + Alt + 7` | Neo-Brutalist Dark Grey |
 | `Ctrl + Alt + 8` | Neo-Brutalist White |
 
+### VS Code Theme Switching
+| Keybinding | Action |
+|------------|--------|
+| `Super + T` | Cycle through VS Code themes |
+| `Super + Shift + T` | Switch to dark theme (Tokyo Night Storm) |
+| `Super + Ctrl + T` | Switch to light theme (GitHub Light) |
+
 ## 🔧 System Controls
 
 ### Session Management
@@ -180,5 +187,5 @@ Resize: Super + R (mode), Shift + H/V (50% smaller)
 Launch: Super + Return (term), D (apps), E (files)
 Workspace: Super + 1-9 (switch), Shift + 1-9 (move)
 Monitor: Super + ,/. (focus), Shift + ,/. (move)
-Theme: Super + W (wallpaper), Ctrl+Alt + 1-8 (terminal)
+Theme: Super + W (wallpaper), Ctrl+Alt + 1-8 (terminal), T (VS Code)
 ```
