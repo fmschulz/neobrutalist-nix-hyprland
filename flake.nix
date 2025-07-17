@@ -26,11 +26,14 @@
     # Hyprland (latest)
     hyprland.url = "github:hyprwm/Hyprland";
     
+    # Claude Code (latest with automatic updates)
+    claude-code.url = "github:sadjow/claude-code-nix";
+    
     # Flake utilities
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, agenix, hyprland, flake-utils, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, agenix, hyprland, claude-code, flake-utils, ... }@inputs:
     let
       system = "x86_64-linux";
       
@@ -46,6 +49,8 @@
               config.allowUnfree = true;
             };
           })
+          # Add claude-code overlay
+          claude-code.overlays.default
         ];
       };
       

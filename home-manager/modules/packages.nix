@@ -121,9 +121,9 @@
     podman              # Container runtime
     buildah             # Container builder
     
-    # Text Editors & IDEs - INCLUDING UNSTABLE
+    # Text Editors & IDEs
     vim
-    unstable.claude-code  # Latest AI coding assistant
+    claude-code  # Latest AI coding assistant from claude-code-nix
     
     # Browsers
     firefox
