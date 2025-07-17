@@ -24,7 +24,8 @@
       "amd_pstate=active"           # Better AMD power management
       "amdgpu.sg_display=0"         # Fix display issues
       "rtc_cmos.use_acpi_alarm=1"   # Better RTC wake
-      "mem_sleep_default=deep"      # Better suspend
+      "mem_sleep_default=deep"      # Force deep sleep (S3) instead of s2idle
+      "acpi_sleep=deep"             # Additional parameter to force deep sleep
       "module_blacklist=hid_sensor_hub"  # Fixes ambient light sensor issues
       "amd_iommu=on"                # Enable IOMMU for better virtualization
       "iommu=pt"                    # IOMMU passthrough mode

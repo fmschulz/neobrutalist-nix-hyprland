@@ -26,6 +26,9 @@ in
     
     # Common system configuration
     ../../system/system/configuration.nix
+    
+    # Suspend/sleep fixes for battery drain
+    ../../system/modules/suspend-fixes.nix
   ];
   
   # Host identification

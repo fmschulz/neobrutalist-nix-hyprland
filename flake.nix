@@ -42,6 +42,8 @@
         inherit system;
         config.allowUnfree = true;
         overlays = [
+          # Add claude-code overlay first (higher priority)
+          claude-code.overlays.default
           # Add unstable packages as overlay
           (final: prev: {
             unstable = import nixpkgs-unstable {
@@ -49,8 +51,6 @@
               config.allowUnfree = true;
             };
           })
-          # Add claude-code overlay
-          claude-code.overlays.default
         ];
       };
       

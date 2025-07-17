@@ -111,11 +111,7 @@
     # Framework-specific thermal management
     thermald.enable = true;
     
-    # Framework laptop support
-    logind = {
-      lidSwitch = "suspend";
-      lidSwitchExternalPower = "lock";
-    };
+    # Framework laptop support - removed to avoid conflicts with system config
     
     # X server for XWayland support
     xserver = {

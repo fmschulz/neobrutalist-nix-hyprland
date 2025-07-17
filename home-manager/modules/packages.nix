@@ -1,4 +1,4 @@
-{ config, pkgs, lib, unstable, ... }:
+{ config, pkgs, lib, unstable, inputs, ... }:
 {
   # Note: allowUnfree is handled by global pkgs configuration
   
@@ -123,7 +123,6 @@
     
     # Text Editors & IDEs
     vim
-    claude-code  # Latest AI coding assistant from claude-code-nix
     
     # Browsers
     firefox
@@ -257,6 +256,9 @@
     gamemode            # Gaming optimizations
     mangohud            # Gaming overlay for FPS/performance monitoring
     gamescope           # Gaming compositor
+  ] ++ [
+    # Add claude-code from the claude-code-nix flake input
+    inputs.claude-code.packages.${pkgs.system}.claude-code
   ];
   
   # Programs that need additional configuration

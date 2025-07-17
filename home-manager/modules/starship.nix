@@ -3,7 +3,7 @@
 {
   programs.starship = {
     enable = true;
-    enableBashIntegration = true;
+    enableBashIntegration = false;  # Manage manually due to path issues
     
     settings = {
       # Neo-brutalist prompt with bold colors
