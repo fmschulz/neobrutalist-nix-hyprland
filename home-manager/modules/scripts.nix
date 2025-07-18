@@ -99,6 +99,12 @@
     chmod +x $HOME/.config/scripts/transcribe-audio 2>/dev/null || true
   '';
   
+  # Adobe Reader Wine installer script
+  home.file.".config/scripts/install-adobe-reader-wine.sh" = {
+    executable = true;
+    source = ../scripts/adobe-reader-wine.sh;
+  };
+  
   # Add scripts directory to PATH
   home.sessionPath = [
     "$HOME/.config/scripts"

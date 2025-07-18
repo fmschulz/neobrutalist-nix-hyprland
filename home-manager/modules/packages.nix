@@ -142,6 +142,11 @@
     glow                # Terminal markdown renderer
     zathura             # PDF viewer (keyboard-driven)
     evince              # Alternative PDF viewer
+    kdePackages.okular  # Feature-rich PDF viewer with annotation support
+    
+    # Wine for running Windows applications
+    wineWowPackages.stable  # Wine with 32 and 64-bit support
+    winetricks             # Wine configuration tool
     eog                 # Eye of GNOME image viewer
     vlc                 # Alternative video player
     gimp                # Image editor
