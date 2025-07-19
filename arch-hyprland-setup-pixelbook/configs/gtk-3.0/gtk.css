@@ -1,0 +1,191 @@
+/* Neobrutalist GTK Theme - Simple white outline shapes */
+
+/* Global settings */
+* {
+    border-radius: 0;
+    -gtk-outline-radius: 0;
+}
+
+/* Window styling */
+window {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+/* Thunar specific styling */
+.thunar {
+    background-color: #000000;
+}
+
+/* Main view area */
+.view, treeview {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: "JetBrains Mono";
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/* Directory items - white outline rectangles */
+.thunar .view row {
+    background: #000000;
+    border: 3px solid #ffffff;
+    padding: 8px;
+    margin: 2px;
+}
+
+/* Selected items */
+.thunar .view row:selected,
+treeview:selected {
+    background-color: #ffffff;
+    color: #000000;
+    border: 3px solid #f9b409;
+}
+
+/* Hover effect */
+.thunar .view row:hover {
+    background-color: #2a687a;
+    border: 2px solid #ffffff;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: #000000;
+    border-right: 3px solid #ffffff;
+}
+
+.sidebar row {
+    color: #ffffff;
+    font-weight: bold;
+    padding: 8px;
+}
+
+.sidebar row:hover {
+    background-color: #2a687a;
+    border: 2px solid #ffffff;
+}
+
+.sidebar row:selected {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Toolbar */
+toolbar {
+    background-color: #000000;
+    border-bottom: 3px solid #ffffff;
+    padding: 8px;
+}
+
+toolbar button {
+    background: #000000;
+    border: 3px solid #ffffff;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 8px 16px;
+    margin: 2px;
+}
+
+toolbar button:hover {
+    background: #ffffff;
+    color: #000000;
+}
+
+/* Headerbar */
+headerbar {
+    background-color: #000000;
+    border-bottom: 3px solid #ffffff;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 8px;
+}
+
+headerbar button {
+    background: #000000;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    padding: 6px 12px;
+}
+
+headerbar button:hover {
+    background: #ffffff;
+    color: #000000;
+}
+
+/* Scrollbars */
+scrollbar {
+    background: #000000;
+    border: 2px solid #ffffff;
+}
+
+scrollbar slider {
+    background: #ffffff;
+    border: 1px solid #000000;
+    min-width: 12px;
+    min-height: 12px;
+}
+
+/* Entry fields */
+entry {
+    background: #000000;
+    border: 3px solid #ffffff;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 8px;
+}
+
+entry:focus {
+    border-color: #f9b409;
+}
+
+/* File chooser dialog - fix for Google Docs */
+filechooser {
+    background: #000000;
+    color: #ffffff;
+}
+
+filechooser .view {
+    background: #000000;
+    color: #ffffff;
+    border: 3px solid #ffffff;
+}
+
+filechooser .sidebar {
+    background: #000000;
+    border-right: 3px solid #ffffff;
+}
+
+filechooser .sidebar row {
+    color: #ffffff;
+    padding: 8px;
+}
+
+filechooser .sidebar row:selected {
+    background: #ffffff;
+    color: #000000;
+}
+
+/* Icon view for thunar */
+iconview {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+iconview:selected {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Pathbar */
+.path-bar button {
+    background: #000000;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    padding: 4px 8px;
+    margin: 1px;
+}
+
+.path-bar button:hover {
+    background: #ffffff;
+    color: #000000;
+}
