@@ -1,6 +1,0 @@
-# Remove the problematic 64-bit prefix
-rm -rf ~/.wine-adobe-reader
-
-# Create a clean 32-bit Wine prefix
-export WINEARCH=win32
-WINEPREFIX="$HOME/.wine-adobe-reader" winecfg

@@ -258,16 +258,17 @@
         "workspace 2, class:^(kitty)$,initialTitle:^Yazi: File Manager$"
         "workspace 6, class:^(kitty)$,title:^btop.*$"
         "workspace 6, class:^(kitty)$,initialTitle:^btop.*$"
-        "workspace 4, class:^(code)$"
-        "workspace 4, class:^(code-url-handler)$" 
-        "workspace 3, class:^(firefox)$"
-        "workspace 5, class:^(chromium-browser)$"
-        "workspace 5, class:^(chromium)$"
-        "workspace 5, class:^(Chromium)$"
         "workspace 7, class:^([Ss]lack)$"
-        "workspace 8, class:^([Oo]bsidian)$"
-        "workspace 9, class:^(YouTube Music)$"
-        "workspace 9, class:^(youtube-music)$"
+        "workspace 8, class:^(kitty)$"
+        "workspace 8, class:^(firefox)$"
+        "workspace 8, class:^(chromium-browser)$"
+        "workspace 8, class:^(chromium)$"
+        "workspace 8, class:^(Chromium)$"
+        "workspace 9, class:^(code)$"
+        "workspace 9, class:^(code-url-handler)$"
+        "workspace 10, class:^([Oo]bsidian)$"
+        "workspace 10, class:^(YouTube Music)$"
+        "workspace 10, class:^(youtube-music)$"
         "workspace 1, class:^(kitty)$"
         "suppressevent maximize, class:.*"
       ];
@@ -287,16 +288,17 @@
         
         # Wallpaper daemon and set wallpaper (with multi-monitor support)
         "swww-daemon"
-        "sleep 3 && swww img ~/dotfiles/home-manager/wallpapers/wp0.png --outputs eDP-1,DP-10"
+        "sleep 3 && swww img ~/dotfiles/home-manager/wallpapers/wp0.png --outputs eDP-1,DP-11"
         
         # Workspace applications (launched silently)
         "[workspace 1 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF"
         "[workspace 1 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF"
         "[workspace 2 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF --title 'Yazi: File Manager' -e yazi"
-        "[workspace 3 silent] firefox"
-        "[workspace 4 silent] code"
-        "[workspace 5 silent] chromium"
         "[workspace 6 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF --title 'btop - System Monitor' -e btop"
+        "[workspace 8 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF"
+        "[workspace 8 silent] firefox"
+        "[workspace 8 silent] chromium"
+        "[workspace 9 silent] code"
         
         # Set cursor theme for GTK apps
         "gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Ice'"
@@ -306,6 +308,10 @@
     
     # Additional configuration files
     extraConfig = ''
+      # Assign workspaces to external monitor
+      workspace = 8, monitor:DP-11
+      workspace = 9, monitor:DP-11
+
       # Resize submap
       submap = resize
       

@@ -45,6 +45,10 @@ alias gp='git push'
 alias gl='git log --oneline'
 alias gd='git diff'
 
+ccgrep = "~/.claude/commands/claude-grep.sh"
+ccgit = "~/.claude/commands/claude-git.sh"
+ccbash = "~/.claude/commands/claude-bash.sh"
+
 # dev
 alias px="pixi"
 alias pxr="pixi run"

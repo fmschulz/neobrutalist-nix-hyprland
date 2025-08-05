@@ -12,6 +12,9 @@
     # Use regular llama.cpp for now (can add ROCm support later)
     llama-cpp
     
+    # Gemini CLI (from nixpkgs)
+    gemini-cli
+
     # Additional AI tools
     # whisper-cpp  # Speech recognition
     # stable-diffusion-webui  # Image generation (if needed)
