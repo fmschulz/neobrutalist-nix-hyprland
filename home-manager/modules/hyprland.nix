@@ -254,22 +254,31 @@
       
       # Window rules (order matters - more specific rules first)
       windowrulev2 = [
-        "workspace 2, class:^(kitty)$,title:^Yazi: File Manager$"
-        "workspace 2, class:^(kitty)$,initialTitle:^Yazi: File Manager$"
-        "workspace 6, class:^(kitty)$,title:^btop.*$"
-        "workspace 6, class:^(kitty)$,initialTitle:^btop.*$"
-        "workspace 7, class:^([Ss]lack)$"
-        "workspace 8, class:^(kitty)$"
-        "workspace 8, class:^(firefox)$"
-        "workspace 8, class:^(chromium-browser)$"
-        "workspace 8, class:^(chromium)$"
-        "workspace 8, class:^(Chromium)$"
-        "workspace 9, class:^(code)$"
-        "workspace 9, class:^(code-url-handler)$"
-        "workspace 10, class:^([Oo]bsidian)$"
+        # Specific kitty instances first
+        "workspace 2, class:^(kitty)$,title:.*[Yy]azi.*"
+        "workspace 7, class:^(kitty)$,title:.*btop.*"
+        
+        # VS Code on workspaces 3 and 4
+        "workspace 3, class:^(code)$"
+        "workspace 3, class:^(code-url-handler)$"
+        "workspace 3, class:^(Code)$"
+        
+        # Browsers
+        "workspace 5, class:^(firefox)$"
+        "workspace 5, class:^(Firefox)$"
+        "workspace 6, class:^(chromium-browser)$"
+        "workspace 6, class:^(chromium)$"
+        "workspace 6, class:^(Chromium)$"
+        
+        # Other applications
+        "workspace 9, class:^([Oo]bsidian)$"
         "workspace 10, class:^(YouTube Music)$"
         "workspace 10, class:^(youtube-music)$"
+        
+        # Generic kitty terminals go to workspace 1 (fallback)
         "workspace 1, class:^(kitty)$"
+        
+        # General rules
         "suppressevent maximize, class:.*"
       ];
       
@@ -291,14 +300,17 @@
         "sleep 3 && swww img ~/dotfiles/home-manager/wallpapers/wp0.png --outputs eDP-1,DP-11"
         
         # Workspace applications (launched silently)
-        "[workspace 1 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF"
-        "[workspace 1 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF"
-        "[workspace 2 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF --title 'Yazi: File Manager' -e yazi"
-        "[workspace 6 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF --title 'btop - System Monitor' -e btop"
-        "[workspace 8 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF"
-        "[workspace 8 silent] firefox"
-        "[workspace 8 silent] chromium"
-        "[workspace 9 silent] code"
+        "[workspace 1 silent] kitty --override background=#000000 --override foreground=#FFFFFF"
+        "[workspace 1 silent] kitty --override background=#000000 --override foreground=#FFFFFF"
+        "[workspace 2 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF --title 'Yazi' yazi"
+        "[workspace 3 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF -e ssh jgi-ont"
+        "[workspace 3 silent] code"
+        "[workspace 4 silent] code"
+        "[workspace 5 silent] firefox"
+        "[workspace 6 silent] chromium"
+        "[workspace 7 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF --title 'btop' btop"
+        "[workspace 9 silent] obsidian"
+        "[workspace 10 silent] youtube-music"
         
         # Set cursor theme for GTK apps
         "gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Ice'"
@@ -309,8 +321,8 @@
     # Additional configuration files
     extraConfig = ''
       # Assign workspaces to external monitor
-      workspace = 8, monitor:DP-11
-      workspace = 9, monitor:DP-11
+      workspace = 5, monitor:DP-11
+      workspace = 6, monitor:DP-11
 
       # Resize submap
       submap = resize
