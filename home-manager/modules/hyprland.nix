@@ -259,14 +259,18 @@
         "workspace 3, class:^(kitty)$,title:.*SSH.*"
         "workspace 7, class:^(kitty)$,title:.*btop.*"
         
+        # VS Code - workspace assignments
+        "workspace 3, class:^(code)$,title:.*jgi-ont.*"
+        "workspace 4, class:^(code)$"
+        "workspace 4, class:^(code-url-handler)$"
+        "workspace 4, class:^(Code)$"
+        
         # Browsers - specific workspaces
         "workspace 5, class:^(firefox)$"
         "workspace 5, class:^(Firefox)$"
         "workspace 6, class:^(chromium-browser)$"
         "workspace 6, class:^(chromium)$"
         "workspace 6, class:^(Chromium)$"
-        
-        # VS Code - no specific workspace rule, let exec-once handle it
         
         # Other applications
         "workspace 9, class:^([Oo]bsidian)$"
@@ -300,13 +304,13 @@
         # Workspace applications (launched silently)
         "[workspace 1 silent] kitty --config NONE -o background=#000000 -o foreground=#FFFFFF"
         "[workspace 1 silent] kitty --config NONE -o background=#000000 -o foreground=#FFFFFF"
-        "[workspace 2 silent] kitty --config NONE -o background=#2D2D2D -o foreground=#FFFFFF -o window_padding_width=10 --title 'Yazi' -e yazi"
-        "[workspace 3 silent] kitty --config NONE -o background=#2D2D2D -o foreground=#FFFFFF --title 'SSH: jgi-ont' -e ssh jgi-ont"
-        "[workspace 3 silent] code"
-        "[workspace 4 silent] code --new-window"
-        "[workspace 5 silent] firefox --new-window"
-        "[workspace 6 silent] chromium --new-window"
-        "[workspace 7 silent] kitty --config NONE -o background=#2D2D2D -o foreground=#FFFFFF --title 'btop' -e btop"
+        "[workspace 2 silent] kitty --config NONE -o background=#2D2D2D -o foreground=#FFFFFF --title 'Yazi' bash -c 'sleep 1 && yazi'"
+        "[workspace 3 silent] kitty --config NONE -o background=#2D2D2D -o foreground=#FFFFFF --title 'SSH: jgi-ont' bash -c 'sleep 1 && ssh jgi-ont'"
+        "[workspace 3 silent] sleep 2 && code"
+        "[workspace 4 silent] sleep 3 && code --new-window"
+        "[workspace 5 silent] firefox"
+        "[workspace 6 silent] chromium"
+        "[workspace 7 silent] kitty --config NONE -o background=#2D2D2D -o foreground=#FFFFFF --title 'btop' bash -c 'sleep 1 && btop'"
         "[workspace 9 silent] obsidian"
         "[workspace 10 silent] youtube-music-desktop-app"
         
