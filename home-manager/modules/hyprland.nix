@@ -254,26 +254,24 @@
       
       # Window rules (order matters - more specific rules first)
       windowrulev2 = [
-        # Specific kitty instances first
-        "workspace 2, class:^(kitty)$,title:.*[Yy]azi.*"
+        # Specific kitty instances with title matching
+        "workspace 2, class:^(kitty)$,title:.*Yazi.*"
+        "workspace 3, class:^(kitty)$,title:.*SSH.*"
         "workspace 7, class:^(kitty)$,title:.*btop.*"
         
-        # VS Code on workspaces 3 and 4
-        "workspace 3, class:^(code)$"
-        "workspace 3, class:^(code-url-handler)$"
-        "workspace 3, class:^(Code)$"
-        
-        # Browsers
+        # Browsers - specific workspaces
         "workspace 5, class:^(firefox)$"
         "workspace 5, class:^(Firefox)$"
         "workspace 6, class:^(chromium-browser)$"
         "workspace 6, class:^(chromium)$"
         "workspace 6, class:^(Chromium)$"
         
+        # VS Code - no specific workspace rule, let exec-once handle it
+        
         # Other applications
         "workspace 9, class:^([Oo]bsidian)$"
         "workspace 10, class:^(YouTube Music)$"
-        "workspace 10, class:^(youtube-music)$"
+        "workspace 10, class:^(youtube-music-desktop-app)$"
         
         # Generic kitty terminals go to workspace 1 (fallback)
         "workspace 1, class:^(kitty)$"
@@ -300,17 +298,17 @@
         "sleep 3 && swww img ~/dotfiles/home-manager/wallpapers/wp0.png --outputs eDP-1,DP-11"
         
         # Workspace applications (launched silently)
-        "[workspace 1 silent] kitty --override background=#000000 --override foreground=#FFFFFF"
-        "[workspace 1 silent] kitty --override background=#000000 --override foreground=#FFFFFF"
-        "[workspace 2 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF --title 'Yazi' yazi"
-        "[workspace 3 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF -e ssh jgi-ont"
+        "[workspace 1 silent] kitty --config NONE -o background=#000000 -o foreground=#FFFFFF"
+        "[workspace 1 silent] kitty --config NONE -o background=#000000 -o foreground=#FFFFFF"
+        "[workspace 2 silent] kitty --config NONE -o background=#2D2D2D -o foreground=#FFFFFF -o window_padding_width=10 --title 'Yazi' -e yazi"
+        "[workspace 3 silent] kitty --config NONE -o background=#2D2D2D -o foreground=#FFFFFF --title 'SSH: jgi-ont' -e ssh jgi-ont"
         "[workspace 3 silent] code"
-        "[workspace 4 silent] code"
-        "[workspace 5 silent] firefox"
-        "[workspace 6 silent] chromium"
-        "[workspace 7 silent] kitty --override background=#2D2D2D --override foreground=#FFFFFF --title 'btop' btop"
+        "[workspace 4 silent] code --new-window"
+        "[workspace 5 silent] firefox --new-window"
+        "[workspace 6 silent] chromium --new-window"
+        "[workspace 7 silent] kitty --config NONE -o background=#2D2D2D -o foreground=#FFFFFF --title 'btop' -e btop"
         "[workspace 9 silent] obsidian"
-        "[workspace 10 silent] youtube-music"
+        "[workspace 10 silent] youtube-music-desktop-app"
         
         # Set cursor theme for GTK apps
         "gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Ice'"
