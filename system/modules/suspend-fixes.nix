@@ -13,12 +13,23 @@
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStart = pkgs.writeShellScript "suspend-fixes" ''
-        # Force deep sleep mode
-        if [ -f /sys/power/mem_sleep ]; then
-          echo "Current sleep mode: $(cat /sys/power/mem_sleep)"
-          echo deep > /sys/power/mem_sleep || true
-          echo "Sleep mode after fix: $(cat /sys/power/mem_sleep)"
-        fi
+        # Framework 13 AMD only supports s2idle, optimize it instead
+        echo "Framework 13 AMD uses s2idle (modern standby)"
+        
+        # Enable NVMe power management (critical for s2idle)
+        for nvme in /sys/class/nvme/nvme*/power/control; do
+          if [ -f "$nvme" ]; then
+            echo auto > "$nvme" || true
+            echo "Enabled power management for $(basename $(dirname $(dirname $nvme)))"
+          fi
+        done
+        
+        # Enable SATA link power management
+        for sata in /sys/class/scsi_host/host*/link_power_management_policy; do
+          if [ -f "$sata" ]; then
+            echo med_power_with_dipm > "$sata" || true
+          fi
+        done
         
         # Disable USB wake for better battery life during suspend
         # This prevents USB devices from waking the laptop
@@ -108,9 +119,9 @@
       PCIE_ASPM_ON_AC = "default";
       PCIE_ASPM_ON_BAT = "powersupersave";
       
-      # Runtime PM (using mkDefault to avoid conflicts)
-      RUNTIME_PM_ON_AC = lib.mkDefault "on";
-      RUNTIME_PM_ON_BAT = lib.mkDefault "auto";
+      # Runtime PM - critical for NVMe power management
+      RUNTIME_PM_ON_AC = "auto";  # Enable power management even on AC
+      RUNTIME_PM_ON_BAT = "auto";
       
       # USB autosuspend
       USB_AUTOSUSPEND = 1;

@@ -24,13 +24,12 @@
       "amd_pstate=active"           # Better AMD power management
       "amdgpu.sg_display=0"         # Fix display issues
       "rtc_cmos.use_acpi_alarm=1"   # Better RTC wake
-      "mem_sleep_default=deep"      # Force deep sleep (S3) instead of s2idle
-      "acpi_sleep=deep"             # Additional parameter to force deep sleep
+      # NOTE: Framework 13 AMD only supports s2idle, not S3 deep sleep
+      # Removed mem_sleep_default=deep and acpi_sleep=deep as they don't work
       "module_blacklist=hid_sensor_hub"  # Fixes ambient light sensor issues
-      # Additional suspend fixes for Framework 13 AMD
+      # s2idle optimization for Framework 13 AMD
       "acpi_osi=Linux"              # Better ACPI compatibility
-      # Removed processor.max_cstate=1 as it prevents proper CPU sleep
-      # Removed rcu_nocbs as it's not needed for suspend issues
+      "iomem=relaxed"               # Better device power management
       "amd_iommu=on"                # Enable IOMMU for better virtualization
       "iommu=pt"                    # IOMMU passthrough mode
       # Removed nvme_core.default_ps_max_latency_us=0 - prevents NVMe power saving!

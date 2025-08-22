@@ -17,7 +17,7 @@
     kernelParams = [
       # Enable PCIe hotplug for eGPU
       "pcie_ports=native"
-      "pcie_port_pm=off"
+      # NOTE: Removed pcie_port_pm=off to fix suspend issues
       # Thunderbolt security
       "thunderbolt.dyndbg=+p"
     ];
