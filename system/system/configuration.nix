@@ -27,13 +27,19 @@
       "mem_sleep_default=deep"      # Force deep sleep (S3) instead of s2idle
       "acpi_sleep=deep"             # Additional parameter to force deep sleep
       "module_blacklist=hid_sensor_hub"  # Fixes ambient light sensor issues
+      # Additional suspend fixes for Framework 13 AMD
+      "acpi_osi=Linux"              # Better ACPI compatibility
+      "amd_pstate.shared_mem=1"     # Better power state management
+      "processor.max_cstate=1"      # Prevent deep C-states that cause issues
+      "rcu_nocbs=0-15"             # Offload RCU callbacks from all CPUs
       "amd_iommu=on"                # Enable IOMMU for better virtualization
       "iommu=pt"                    # IOMMU passthrough mode
       "nvme_core.default_ps_max_latency_us=0"  # Better NVMe performance
       "transparent_hugepage=madvise" # Better memory performance
       # eGPU support parameters
       "pcie_ports=native"           # Enable PCIe hotplug for eGPU
-      "pcie_port_pm=off"           # Disable PCIe power management for eGPU stability
+      # NOTE: Removed pcie_port_pm=off to fix suspend issues
+      # PCIe power management is critical for proper suspend
     ];
     
     # Use latest kernel for best Framework support

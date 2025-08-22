@@ -27,7 +27,8 @@
     "radeon.cik_support=0"
     
     # eGPU specific optimizations
-    "amdgpu.runpm=0"           # Disable runtime power management for eGPU
+    # NOTE: Removed amdgpu.runpm=0 to fix suspend issues
+    # Runtime PM will be managed per-device via sysfs if needed
     "amdgpu.gpu_recovery=1"    # Enable GPU recovery
   ];
 

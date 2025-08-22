@@ -15,7 +15,8 @@
   # ROCm specific kernel parameters
   boot.kernelParams = [
     "amdgpu.gpu_recovery=1"
-    "amdgpu.dpm=0"  # Disable dynamic power management for stability
+    # NOTE: Removed amdgpu.dpm=0 to fix suspend/resume issues
+    # DPM is critical for proper power management during suspend
     # Fix eGPU detection - force amdgpu to handle RX 7900 XT instead of radeon
     "amdgpu.si_support=1"
     "radeon.si_support=0"
