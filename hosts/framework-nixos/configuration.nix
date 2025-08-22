@@ -126,10 +126,11 @@ in
   };
   
   # Host-specific storage configuration
-  fileSystems."/home/storage" = {
+  # Mount the 1.7TB partition as /home instead of /home/storage
+  fileSystems."/home" = {
     device = "/dev/disk/by-uuid/bfdbd63b-773e-4bc9-847c-3faeaeb78b73";
     fsType = "ext4";
-    options = [ "defaults" "user" "rw" ];
+    options = [ "defaults" ];
   };
   
   # Host system information (for documentation)
