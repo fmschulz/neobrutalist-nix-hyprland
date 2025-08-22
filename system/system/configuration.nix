@@ -29,12 +29,12 @@
       "module_blacklist=hid_sensor_hub"  # Fixes ambient light sensor issues
       # Additional suspend fixes for Framework 13 AMD
       "acpi_osi=Linux"              # Better ACPI compatibility
-      "amd_pstate.shared_mem=1"     # Better power state management
-      "processor.max_cstate=1"      # Prevent deep C-states that cause issues
-      "rcu_nocbs=0-15"             # Offload RCU callbacks from all CPUs
+      # Removed processor.max_cstate=1 as it prevents proper CPU sleep
+      # Removed rcu_nocbs as it's not needed for suspend issues
       "amd_iommu=on"                # Enable IOMMU for better virtualization
       "iommu=pt"                    # IOMMU passthrough mode
-      "nvme_core.default_ps_max_latency_us=0"  # Better NVMe performance
+      # Removed nvme_core.default_ps_max_latency_us=0 - prevents NVMe power saving!
+      "nvme.noacpi=1"               # Better NVMe suspend compatibility
       "transparent_hugepage=madvise" # Better memory performance
       # eGPU support parameters
       "pcie_ports=native"           # Enable PCIe hotplug for eGPU

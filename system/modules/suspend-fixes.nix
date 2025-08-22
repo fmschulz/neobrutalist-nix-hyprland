@@ -28,13 +28,25 @@
           fi
         done
         
-        # Keep important wake sources (lid, power button)
-        # But disable others that might cause spurious wakes
-        for device in XHC0 XHC1 XHC3 XHC4; do
-          if grep -q "^$device" /proc/acpi/wakeup; then
+        # Disable all USB controllers from waking the system
+        # This is critical for Framework 13 AMD to prevent phantom wakes
+        for device in XHC0 XHC1 XHC2 XHC3 XHC4; do
+          if grep -q "^$device.*enabled" /proc/acpi/wakeup; then
             echo "$device" > /proc/acpi/wakeup || true
+            echo "Disabled wake for $device"
           fi
         done
+        
+        # Also disable GPP (PCIe General Purpose Ports) wake sources
+        for device in GPP0 GPP2 GPP5 GPP6 GPP7 GP11 GP12; do
+          if grep -q "^$device.*enabled" /proc/acpi/wakeup; then
+            echo "$device" > /proc/acpi/wakeup || true
+            echo "Disabled wake for $device"
+          fi
+        done
+        
+        # Keep only NHI0/NHI1 (Thunderbolt) enabled for eGPU hotplug
+        # Lid and power button are handled separately by systemd
         
         echo "Suspend fixes applied"
       '';
