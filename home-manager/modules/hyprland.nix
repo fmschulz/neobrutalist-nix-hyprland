@@ -268,8 +268,8 @@
         
         # Other applications
         "workspace 5, class:^([Oo]bsidian)$"
-        "workspace 10, class:^(YouTube Music)$"
-        "workspace 10, class:^(youtube-music-desktop-app)$"
+        "workspace 6, class:^(YouTube Music)$"
+        "workspace 6, class:^(youtube-music-desktop-app)$"
         
         # Generic kitty terminals go to workspace 1 (fallback)
         "workspace 1, class:^(kitty)$"
@@ -302,7 +302,7 @@
         "[workspace 3 silent] chromium"
         "[workspace 4 silent] code"
         "[workspace 5 silent] obsidian"
-        "[workspace 10 silent] youtube-music-desktop-app"
+        "[workspace 6 silent] youtube-music-desktop-app"
         
         # Set cursor theme for GTK apps
         "gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Ice'"
