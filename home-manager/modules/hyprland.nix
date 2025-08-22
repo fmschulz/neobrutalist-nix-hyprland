@@ -269,7 +269,7 @@
         # Other applications
         "workspace 5, class:^([Oo]bsidian)$"
         "workspace 6, class:^(YouTube Music)$"
-        "workspace 6, class:^(youtube-music-desktop-app)$"
+        "workspace 6, class:^(youtube-music)$"
         
         # Generic kitty terminals go to workspace 1 (fallback)
         "workspace 1, class:^(kitty)$"
@@ -302,7 +302,7 @@
         "[workspace 3 silent] chromium"
         "[workspace 4 silent] code"
         "[workspace 5 silent] obsidian"
-        "[workspace 6 silent] youtube-music-desktop-app"
+        "[workspace 6 silent] youtube-music"
         
         # Set cursor theme for GTK apps
         "gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Ice'"
@@ -312,9 +312,11 @@
     
     # Additional configuration files
     extraConfig = ''
-      # Assign workspaces to external monitor
-      workspace = 5, monitor:DP-11
-      workspace = 6, monitor:DP-11
+      # Monitor setup for docked mode
+      # When external monitor connected, it becomes primary
+      # Clamshell mode - disable laptop screen when lid closed
+      bindl = , switch:on:Lid Switch, exec, hyprctl keyword monitor "eDP-1,disable"
+      bindl = , switch:off:Lid Switch, exec, hyprctl keyword monitor "eDP-1,2880x1920@120,0x0,1.5"
 
       # Resize submap
       submap = resize
