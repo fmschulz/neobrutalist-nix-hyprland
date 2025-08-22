@@ -87,6 +87,9 @@
     python3Packages.virtualenv
     python3Packages.setuptools
     python3Packages.wheel
+    python3Packages.rich        # Beautiful terminal formatting
+    python3Packages.psutil      # System monitoring for rich-status
+    python3Packages.pygments    # Syntax highlighting
     
     # JavaScript/TypeScript development
     nodePackages.typescript
