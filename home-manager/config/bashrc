@@ -249,15 +249,11 @@ ccv () {
 eval "$(zoxide init bash)"
 
 # ===== RICH TERMINAL ENHANCEMENTS =====
-# Rich-enhanced commands for beautiful terminal output
-alias rls='python3 ~/dotfiles/home-manager/config/rich-scripts/rich-ls.py'
-alias rcat='python3 ~/dotfiles/home-manager/config/rich-scripts/rich-cat.py'
-alias rstatus='python3 ~/dotfiles/home-manager/config/rich-scripts/rich-status.py'
-alias rsys='rstatus'  # Short alias for system status
-
-# Optional: Replace default commands with rich versions
-# alias ls='rls'
-# alias cat='rcat'
+# Rich commands are now available as proper NixOS packages:
+# rls - Beautiful file listings with icons and colors
+# rcat - Syntax-highlighted file viewer
+# rstatus - System monitoring dashboard
+# rsys - Short alias for rstatus (defined in rich-terminal.nix)
 
 # Yazi function for cd on exit
 function yy() {

@@ -42,6 +42,7 @@ in
     ../../home-manager/modules/qt.nix
     ../../home-manager/modules/dolphin.nix
     ../../home-manager/modules/scripts.nix
+    ../../home-manager/modules/rich-terminal.nix
     ../../home-manager/modules/waybar.nix
     ../../home-manager/modules/wofi.nix
     ../../home-manager/modules/mako.nix
