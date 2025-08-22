@@ -4,11 +4,20 @@
 { config, lib, pkgs, ... }:
 
 {
+  # Udev rules to ensure NVMe power management
+  services.udev.extraRules = ''
+    # Enable runtime PM for NVMe devices
+    ACTION=="add|change", SUBSYSTEM=="nvme", ATTR{power/control}="auto"
+    # Enable runtime PM for PCI NVMe controllers
+    ACTION=="add|change", SUBSYSTEM=="pci", ATTR{class}=="0x010802", ATTR{power/control}="auto"
+    ACTION=="add|change", SUBSYSTEM=="pci", DRIVER=="nvme", ATTR{power/control}="auto"
+  '';
+
   # Systemd service to ensure deep sleep mode and disable USB wake
   systemd.services.suspend-fixes = {
     description = "Fix suspend issues on Framework 13 AMD";
     wantedBy = [ "multi-user.target" ];
-    after = [ "multi-user.target" ];
+    after = [ "multi-user.target" "tlp.service" ];  # Run after TLP
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -72,8 +81,8 @@
     # Use schedutil governor for better battery life
     cpuFreqGovernor = "schedutil";
     
-    # Enable powertop auto-tune on boot
-    powertop.enable = true;
+    # Disable powertop auto-tune as it conflicts with our manual settings
+    powertop.enable = false;
     
     # scsiLinkPolicy handled by TLP instead
     

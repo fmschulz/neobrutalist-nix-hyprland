@@ -94,7 +94,8 @@
   powerManagement = {
     enable = true;
     cpuFreqGovernor = "schedutil";  # Better than powersave for modern CPUs
-    powertop.enable = true;
+    # Disable powertop auto-tune as it conflicts with TLP and our NVMe settings
+    powertop.enable = false;
   };
 
   # Thermal management
