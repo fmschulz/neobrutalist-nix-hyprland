@@ -88,8 +88,8 @@
     
     # Resume commands to reapply fixes after suspend
     resumeCommands = ''
-      # Reapply deep sleep mode after resume
-      echo deep > /sys/power/mem_sleep || true
+      # Framework 13 AMD uses s2idle, not deep sleep
+      # echo deep > /sys/power/mem_sleep || true  # REMOVED - causes issues on AMD
       
       # Disable USB wakeup again
       for device in /sys/bus/usb/devices/*/power/wakeup; do

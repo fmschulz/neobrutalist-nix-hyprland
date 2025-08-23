@@ -30,6 +30,9 @@ in
     # Suspend/sleep fixes for battery drain
     ../../system/modules/suspend-fixes.nix
     
+    # USB power management fixes for xhci_hcd errors
+    ../../system/modules/usb-power-fixes.nix
+    
     # Clamshell mode support for external monitors
     ../../system/modules/clamshell-support.nix
   ];
