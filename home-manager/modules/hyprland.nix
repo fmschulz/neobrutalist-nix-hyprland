@@ -300,7 +300,7 @@
         "[workspace 1 silent] kitty --config NONE -o background=#000000 -o foreground=#FFFFFF"
         "[workspace 2 silent] firefox"
         "[workspace 3 silent] chromium"
-        "[workspace 4 silent] code"
+        "[workspace 4 silent] code --wait --new-window"
         "[workspace 5 silent] obsidian"
         "[workspace 6 silent] youtube-music"
         
@@ -315,8 +315,9 @@
       # Monitor setup for docked mode
       # When external monitor connected, it becomes primary
       # Clamshell mode - disable laptop screen when lid closed
-      bindl = , switch:on:Lid Switch, exec, hyprctl keyword monitor "eDP-1,disable"
-      bindl = , switch:off:Lid Switch, exec, hyprctl keyword monitor "eDP-1,2880x1920@120,0x0,1.5"
+      # Clamshell mode - uses script to properly handle external monitor scenarios
+      bindl = , switch:on:Lid Switch, exec, ${config.home.homeDirectory}/dotfiles/home-manager/scripts/clamshell-mode.sh close
+      bindl = , switch:off:Lid Switch, exec, ${config.home.homeDirectory}/dotfiles/home-manager/scripts/clamshell-mode.sh open
 
       # Resize submap
       submap = resize

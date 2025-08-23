@@ -48,9 +48,9 @@ alias gd='git diff'
 
 alias cc='claude --dangerously-skip-permissions'
 
-ccgrep = "~/.claude/commands/claude-grep.sh"
-ccgit = "~/.claude/commands/claude-git.sh"
-ccbash = "~/.claude/commands/claude-bash.sh"
+alias ccgrep="~/.claude/commands/claude-grep.sh"
+alias ccgit="~/.claude/commands/claude-git.sh"
+alias ccbash="~/.claude/commands/claude-bash.sh"
 
 # dev
 alias px="pixi"

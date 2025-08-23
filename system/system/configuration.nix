@@ -33,8 +33,12 @@
       "amd_iommu=on"                # Enable IOMMU for better virtualization
       "iommu=pt"                    # IOMMU passthrough mode
       # Removed nvme_core.default_ps_max_latency_us=0 - prevents NVMe power saving!
-      "nvme.noacpi=1"               # Better NVMe suspend compatibility
+      # Removed nvme.noacpi=1 - causes issues on AMD systems, only for Intel!
       "transparent_hugepage=madvise" # Better memory performance
+      
+      # AMD GPU fixes for Framework 13
+      "amdgpu.sg_display=0"         # Fix display issues after sleep/wake on kernel >6.1
+      
       # eGPU support parameters
       "pcie_ports=native"           # Enable PCIe hotplug for eGPU
       # NOTE: Removed pcie_port_pm=off to fix suspend issues
@@ -175,19 +179,20 @@
     # Printing
     printing.enable = true;
     
-    # Lid close behavior - suspend on lid close
-    logind = {
-      lidSwitch = "suspend";          # Suspend when lid is closed
-      lidSwitchDocked = "suspend";    # Suspend even when docked/external display connected
-      lidSwitchExternalPower = lib.mkForce "suspend"; # Override hardware default to suspend even when on AC power
-      extraConfig = ''
-        HandlePowerKey=suspend
-        HandleSuspendKey=suspend
-        HandleHibernateKey=hibernate
-        IdleAction=suspend
-        IdleActionSec=30min
-      '';
-    };
+    # Lid close behavior - NOW HANDLED BY clamshell-support.nix module
+    # Commented out to prevent conflicts with clamshell mode
+    # logind = {
+    #   lidSwitch = "suspend";          # Suspend when lid is closed
+    #   lidSwitchDocked = "suspend";    # Suspend even when docked/external display connected
+    #   lidSwitchExternalPower = lib.mkForce "suspend"; # Override hardware default to suspend even when on AC power
+    #   extraConfig = ''
+    #     HandlePowerKey=suspend
+    #     HandleSuspendKey=suspend
+    #     HandleHibernateKey=hibernate
+    #     IdleAction=suspend
+    #     IdleActionSec=30min
+    #   '';
+    # };
     
     # SSH
     openssh = {

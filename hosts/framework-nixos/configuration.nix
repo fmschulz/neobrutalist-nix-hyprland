@@ -29,6 +29,9 @@ in
     
     # Suspend/sleep fixes for battery drain
     ../../system/modules/suspend-fixes.nix
+    
+    # Clamshell mode support for external monitors
+    ../../system/modules/clamshell-support.nix
   ];
   
   # Host identification
