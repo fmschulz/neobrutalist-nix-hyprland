@@ -1,125 +1,140 @@
 # OpenAI Codex CLI Setup Guide
 
-## Installation Complete! 🎉
+## Overview
+OpenAI Codex CLI is a lightweight coding agent that runs in your terminal, helping you build features faster, squash bugs, and understand unfamiliar code. It runs entirely locally - your code never leaves your machine.
 
-I've set up OpenAI Codex CLI for your NixOS system with three different configuration options:
+## Installation Status: ✅ Complete
 
-### Files Created:
-1. **`home-manager/modules/codex.nix`** - Simple installation with helper scripts
-2. **`home-manager/modules/codex-flake.nix`** - Advanced flake-based configuration
-3. **`home-manager/modules/codex-simple.nix`** - NPM-based installation
+The Codex CLI has been successfully integrated into your NixOS configuration.
 
-### Configuration Added:
-- Updated `flake.nix` to include Codex repository as input
-- Added Codex module to your home configuration
+### Configuration File
+- **Module**: `home-manager/modules/codex.nix`
+- **Import**: Already added to `hosts/framework-nixos/home.nix`
+- **Flake Input**: Configured in `flake.nix`
 
-## Usage Instructions
+## How It Works
 
-### 1. Rebuild Your System
+The installation provides three helper commands:
+
+### 1. `codex-install`
+Automatically:
+- Clones the Codex repository from GitHub
+- Installs Node.js dependencies
+- Downloads the Rust binary (v0.24.0)
+- Sets up the CLI in `~/.local/share/codex-cli/`
+
+### 2. `codex` (or `cx`)
+The main command that:
+- Checks if Codex is installed
+- Runs the CLI using Node.js wrapper
+- Passes all arguments to the Rust binary
+
+### 3. `codex-setup` (deprecated)
+Previously used for API key configuration. No longer needed as Codex now uses ChatGPT authentication.
+
+## Quick Start
+
+### Step 1: Rebuild Your System
 ```bash
 cd ~/dotfiles
 ./rebuild.sh home
 ```
 
-### 2. Install Codex CLI
-After rebuild, you'll have these commands available:
-
+### Step 2: Install Codex (if not already done)
 ```bash
-# Install Codex CLI from source
 codex-install
-
-# Configure your OpenAI API key
-codex-setup
-
-# Use Codex
-codex
-# or use the alias
-cx
 ```
+This downloads and sets up the Codex CLI with the Rust binary.
 
-### 3. Get Your API Key
-1. Visit https://platform.openai.com/api-keys
-2. Create a new API key
-3. Run `codex-setup` and enter your key when prompted
-
-### 4. Available Commands
-Once configured, you can use:
-
+### Step 3: Authenticate
 ```bash
-# Basic usage
-codex              # Start interactive session
-cx                 # Short alias
+codex login
+```
+This opens a browser for ChatGPT authentication. Requires:
+- ChatGPT Plus, Pro, or Team account
+- Active subscription for model access
 
-# Specific commands
-codex chat         # Chat with AI
-codex run          # Run commands
-codex fix          # Fix code issues
-codex explain      # Explain code
+### Step 4: Start Using Codex
+```bash
+# Interactive mode
+codex
 
-# Get help
-codex --help
+# Short alias
+cx
+
+# Direct commands
+codex "explain this code"
+codex exec "write a Python script that..."
 ```
 
-## Configuration Files
+## Available Commands
 
-Your Codex configuration is stored in:
-- **Config**: `~/.config/codex/config.json`
+| Command | Description |
+|---------|-------------|
+| `codex` | Start interactive AI coding session |
+| `codex exec` | Run commands non-interactively |
+| `codex login` | Authenticate with ChatGPT account |
+| `codex logout` | Remove authentication credentials |
+| `codex mcp` | Experimental MCP server mode |
+| `codex proto` | Protocol stream via stdin/stdout |
+| `codex debug` | Internal debugging commands |
+
+## File Locations
+
 - **Installation**: `~/.local/share/codex-cli/`
+- **Binary**: `~/.local/share/codex-cli/codex-cli/bin/codex-x86_64-unknown-linux-musl`
+- **Config**: `~/.config/codex/` (for any local settings)
 
 ## Features
 
-The setup includes:
-- ✅ Node.js 22 for running Codex
-- ✅ Automatic installation scripts
-- ✅ Secure API key storage (chmod 600)
-- ✅ Shell aliases for convenience
-- ✅ Environment variables configured
-- ✅ Integration with your NixOS flake
+✅ **Local execution** - Your code never leaves your machine  
+✅ **Latest models** - Access to GPT-4o and newer models  
+✅ **ChatGPT integration** - No API key needed, uses ChatGPT auth  
+✅ **Shell aliases** - `cx` for quick access  
+✅ **NixOS integration** - Fully declarative configuration  
 
 ## Troubleshooting
 
-If you encounter issues:
+### "Codex CLI is not installed"
+Run `codex-install` to download and set up the CLI.
 
-1. **Check installation**:
-   ```bash
-   ls -la ~/.local/share/codex-cli/
-   ```
+### Authentication Issues
+1. Ensure you have a ChatGPT Plus/Pro/Team account
+2. Run `codex logout` then `codex login` again
+3. Check your browser allows popups for authentication
 
-2. **Verify configuration**:
-   ```bash
-   cat ~/.config/codex/config.json
-   ```
+### Binary Not Found
+The installer automatically downloads the correct binary. If missing:
+```bash
+cd ~/.local/share/codex-cli/codex-cli/bin
+curl -L https://github.com/openai/codex/releases/download/rust-v0.24.0/codex-x86_64-unknown-linux-musl.tar.gz | tar xz
+```
 
-3. **Check Node.js**:
-   ```bash
-   node --version  # Should be v22.x
-   ```
+### Rebuild After Changes
+Always rebuild after modifying the configuration:
+```bash
+cd ~/dotfiles
+./rebuild.sh home
+```
 
-4. **Reinstall if needed**:
-   ```bash
-   rm -rf ~/.local/share/codex-cli
-   codex-install
-   ```
+## Updates
 
-## API Key Security
+The Codex flake input in `flake.nix` points to the main branch. To update:
+```bash
+cd ~/dotfiles
+nix flake update codex
+./rebuild.sh
+```
 
-Your API key is stored securely with:
-- File permissions set to 600 (owner read/write only)
-- Stored in your home directory config
-- Never committed to git
+## Security Notes
 
-## Next Steps
+- Authentication tokens are stored securely by the Codex CLI
+- No API keys are needed (uses ChatGPT OAuth)
+- Your code remains local unless you explicitly share it
+- The CLI respects your privacy and security settings
 
-1. Run `./rebuild.sh home` to apply the configuration
-2. Run `codex-install` to install Codex CLI
-3. Run `codex-setup` to configure your API key
-4. Start using `codex` or `cx` command!
+## Additional Resources
 
-## Additional Notes
-
-- Codex CLI runs entirely locally - your code never leaves your machine
-- You get $5 in API credits with ChatGPT Plus, $50 with Pro
-- The CLI supports multiple models including GPT-4o and GPT-5
-- For development work, you can also use the flake directly from the Codex repo
-
-Enjoy your new AI coding assistant! 🚀
+- [GitHub Repository](https://github.com/openai/codex)
+- [Official Documentation](https://help.openai.com/en/articles/11096431-openai-codex-cli-getting-started)
+- [Changelog](https://help.openai.com/en/articles/11428266-codex-changelog)

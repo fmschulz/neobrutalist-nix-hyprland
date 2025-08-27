@@ -88,6 +88,11 @@ cd ~/dotfiles
 ./rebuild.sh system             # Only rebuild system  
 ./rebuild.sh home               # Only rebuild home-manager
 
+# AI Coding Assistants
+codex                           # OpenAI Codex CLI (ChatGPT Plus/Pro/Team required)
+cx                              # Alias for codex
+claude                          # Claude Code CLI from Anthropic
+
 # Advanced deployment (with updates, checks, etc.)
 ./scripts/deploy.sh --all       # Full deployment with safety checks
 ./scripts/deploy.sh --home      # Home-manager only with checks
@@ -199,6 +204,8 @@ The entire desktop follows a consistent neo-brutalist aesthetic:
 - **Container Tools**: Docker, Podman, Buildah, Lazydocker
 
 ### AI & Machine Learning
+- **OpenAI Codex CLI**: AI coding assistant in your terminal (ChatGPT auth)
+- **Claude Code**: Anthropic's official CLI for Claude
 - **OpenAI Whisper**: Speech recognition for meeting transcription
 - **Meeting Tools**: Custom recording & transcription scripts
 - **Audio Processing**: FFmpeg, Sox for recording
