@@ -29,6 +29,12 @@
     # Claude Code (latest with automatic updates)
     claude-code.url = "github:sadjow/claude-code-nix";
     
+    # OpenAI Codex CLI
+    codex = {
+      url = "github:openai/codex";
+      flake = false;  # Since we'll build it ourselves
+    };
+    
     # Flake utilities
     flake-utils.url = "github:numtide/flake-utils";
   };

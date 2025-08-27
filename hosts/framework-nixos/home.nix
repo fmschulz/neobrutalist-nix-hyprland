@@ -35,6 +35,7 @@ in
     ../../home-manager/modules/hyprland-egpu.nix
     ../../home-manager/modules/ai-tools.nix
     ../../home-manager/modules/claude-code.nix
+    ../../home-manager/modules/codex.nix
     ../../home-manager/modules/kitty.nix
     ../../home-manager/modules/yazi.nix
     ../../home-manager/modules/fastfetch.nix

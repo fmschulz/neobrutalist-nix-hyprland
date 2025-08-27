@@ -75,6 +75,22 @@
         "type": "github"
       }
     },
+    "codex": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1756263424,
+        "narHash": "sha256-ILJrGOn/gbUBFq+Lmh9YlB5gFBWk3Oo0nigQrpvb8a0=",
+        "owner": "openai",
+        "repo": "codex",
+        "rev": "3d8bca7814824cab757a78d18cbdc93a40f1126f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "openai",
+        "repo": "codex",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -578,6 +594,7 @@
       "inputs": {
         "agenix": "agenix",
         "claude-code": "claude-code",
+        "codex": "codex",
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager_2",
         "hyprland": "hyprland",
