@@ -38,6 +38,10 @@
       
       # AMD GPU fixes for Framework 13
       "amdgpu.sg_display=0"         # Fix display issues after sleep/wake on kernel >6.1
+      "amdgpu.ppfeaturemask=0xffffffff"  # Enable all power features for stability
+      "amdgpu.dpm=1"                      # Enable dynamic power management
+      "amdgpu.dc=1"                       # Enable Display Core for better stability
+      "amdgpu.noretry=0"                  # Enable retry on page faults to prevent wedges
       
       # eGPU support parameters
       "pcie_ports=native"           # Enable PCIe hotplug for eGPU
@@ -59,6 +63,12 @@
     memoryPercent = 25;  # Use 25% of RAM for zram
     algorithm = "zstd";  # Better compression
   };
+  
+  # Additional swap file for OOM prevention
+  swapDevices = [{
+    device = "/var/lib/swapfile";
+    size = 16 * 1024; # 16GB swap file
+  }];
 
   # Enable the X server for XWayland support
   services.xserver = {
@@ -102,8 +112,9 @@
     powertop.enable = false;
   };
 
-  # Thermal management
-  services.thermald.enable = true;
+  # Thermal management - disabled due to unsupported AMD CPU
+  # thermald doesn't support modern AMD CPUs properly
+  services.thermald.enable = lib.mkForce false;
   
   # Advanced power management with TLP
   services.tlp = {
@@ -282,8 +293,8 @@
     # Real-time kit for better audio performance
     rtkit.enable = true;
     
-    # Audit system calls
-    auditd.enable = true;
+    # Audit system calls - disabled due to queue overflow causing freezes
+    auditd.enable = false;
     
     # Protect kernel parameters
     protectKernelImage = true;

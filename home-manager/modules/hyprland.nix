@@ -7,9 +7,15 @@
     settings = {
       # Monitor configuration - Framework 13 AMD proper resolution
       monitor = [
+        # Framework 13 laptop display with proper resolution
         "eDP-1,2880x1920@120,0x0,1.5"
+        # External monitors with auto-configuration
         "DP-1,preferred,auto,1.0"
-        "DP-2,preferred,auto,1.0" 
+        "DP-2,preferred,auto,1.0"
+        "DP-3,preferred,auto,1.0"
+        "DP-4,preferred,auto,1.0"
+        "HDMI-A-1,preferred,auto,1.0"
+        "HDMI-A-2,preferred,auto,1.0" 
         "HDMI-A-1,preferred,auto,1.0"
         ",preferred,auto,1.0"
       ];
@@ -109,6 +115,9 @@
       misc = {
         force_default_wallpaper = -1;
         disable_hyprland_logo = false;
+        disable_autoreload = false;  # Allow hot-reload on config changes
+        allow_session_lock_restore = true;  # Restore after lock/unlock
+        render_ahead_of_time = false;  # Prevent display issues
       };
       
       # Variables
@@ -233,8 +242,15 @@
         "$mainMod, mouse:273, resizewindow"
       ];
       
-      # Media keys (Framework laptop function keys)
+      # Lid switch bindings for proper clamshell mode
       bindl = [
+        # Lid events
+        ",switch:on:Lid Switch,exec,/home/fschulz/dotfiles/home-manager/scripts/clamshell-mode.sh close"
+        ",switch:off:Lid Switch,exec,/home/fschulz/dotfiles/home-manager/scripts/clamshell-mode.sh open"
+        
+        # Display recovery hotkey
+        "$mainMod SHIFT, D, exec, /home/fschulz/dotfiles/home-manager/scripts/clamshell-mode.sh recover"
+        
         # Volume controls
         ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
         ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
